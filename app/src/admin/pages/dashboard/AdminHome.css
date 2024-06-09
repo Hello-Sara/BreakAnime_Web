@@ -38,6 +38,10 @@
     font-size: 0.8em;
 }
 
+.sidebar-action {
+    margin-top: 4vh;
+}
+
 .sidebar-link {
     color: #fff;
     text-decoration: none;
