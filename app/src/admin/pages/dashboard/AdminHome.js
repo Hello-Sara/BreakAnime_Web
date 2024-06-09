@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './AdminHome.css';
 import SecondaryBouton from '../../../components/atoms/secondary-bouton/SecondaryBouton';
 import { useNavigate } from 'react-router-dom';
-
-import LOGO from '../../../assets/logos/logo_VBlanc.png';
+import AdminMenu from '../../../components/molecules/admin-menu/AdminMenu';
 import axios from 'axios';
 
 const AdminHome = () => {
@@ -30,11 +29,6 @@ const AdminHome = () => {
         }        
     }, [isConnected, navigate]);
 
-    let handleDeconnection = () => {
-        localStorage.removeItem('token');
-        navigate('/admin');
-    }
-
     if(!isConnected) {
         return null;
     } 
@@ -43,34 +37,7 @@ const AdminHome = () => {
     return (
         <div className="admin-container">
             {/* Menu latéral */}
-            <nav className="sidebar">
-                <ul className="sidebar-nav">
-                    <li className="logo-item">
-                        <img src={LOGO} alt="Logo" className="logo" />
-                    </li>
-                    <li className="sidebar-item">
-                        <h3 className="sidebar-link">Gestion :</h3>
-                    </li>
-                    <li className="sidebar-item">
-                        <a href="#" className="sidebar-link">Gérer les Animes</a>
-                    </li>
-                    <li className="sidebar-item">
-                        <a href="#" className="sidebar-link">Gestion des Genres</a>
-                    </li>
-                    <li className="sidebar-item">
-                        <a href="#" className="sidebar-link">Gestion des Saisons/Année</a>
-                    </li>
-                    <li className="sidebar-item sidebar-action">
-                        <SecondaryBouton 
-                            name="Déconnexion" 
-                            style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}
-                            Submit={() => handleDeconnection()}
-                        />
-                    </li>
-                </ul>
-            </nav>
-
-            {/* Contenu principal */}
+            <AdminMenu />
             <main className="main-content">
                 <header className="header">
                     {/* Icône du compte */}
@@ -115,7 +82,11 @@ const AdminHome = () => {
                         <span>{stats?.users}</span>
                         </div>
                         <div className="admin-card-footer">
-                            <SecondaryBouton name="Gestion des users" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton 
+                                name="Gestion des users" 
+                                style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}
+                                Submit={() => navigate('/admin/users')}
+                            />
                             <SecondaryBouton name="Ajouter un user" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
                         </div>
                     </div>
