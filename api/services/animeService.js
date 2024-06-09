@@ -228,17 +228,30 @@ class AnimeService {
     static mapType(type) {
         switch (type) {
             case 0:
-                return 'TV';
+                return 'ANIME TV';
             case 1:
-                return 'MOVIE';
+                return 'FILM';
             case 2:
                 return 'SPECIAL';
             case 4:
-                return 'ONA';
+                return 'ANIME ONA';
             case 5:
                 return 'MUSIC';
             case 6:
                 return 'UNDEFINED';
+            default:
+                return 'UNKNOWN';
+        }
+    }
+
+    static mapStatus(status) {
+        switch (status) {
+            case 0:
+                return 'FINI';
+            case 1:
+                return 'EN COURS';
+            case 2:
+                return 'PAS ENCORE DIFFUSÉ';
             default:
                 return 'UNKNOWN';
         }

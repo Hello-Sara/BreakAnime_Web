@@ -13,6 +13,11 @@ import DemonSlayerImage from '../../assets/img/demon_slayer.png';
 import SpyXImage from '../../assets/img/spyx.png';
 import XImage from '../../assets/img/x.png';
 import MyHeroImage from '../../assets/img/myhero.png';
+import StarImage from '../../assets/img/star.png';
+import QuizzImage from '../../assets/img/quizz-app.png';
+import { ReactComponent as BackgroundSVG } from '../../assets/icons/global/backround.svg';
+import Max from '../../assets/img/max.png';
+import Lina from '../../assets/img/lina.png';
 
 import './HomePage.css';
 
@@ -101,12 +106,71 @@ function HomePage() {
                 </div>
                 <div className="solution">
                     <h2>SOLUTION</h2>
+                    <img src={StarImage} alt="Icone Quizz" className='little-star'/>
+                    <img src={StarImage} alt="Icone Quizz" className='big-star'/>
                     <p>
                     Répondez à un quizz rapide pour définir vos préférences. Break Anime génère alors une sélection personnalisée d'animes correspondant à vos envies, économisant ainsi temps et frustration.
                     </p>
                 </div>
             </div>
 
+            <div className="quizz-container">
+                <div className='quizz-content'>
+                    <h2>Quizz</h2>
+                    <p>
+                        Répondez à quelques questions, et découvrez des recommandations personnalisées d'anime qui correspondent parfaitement à vos goûts.<strong><br/>C'est rapide, amusant et vous permettra de trouver votre prochaine série préférée en un rien de temps !</strong>
+                    </p>
+                </div>
+                <div className='quizz-img'>
+                    <img src={QuizzImage} alt="Icone Quizz" className='quizz-img'/>
+                </div>
+            </div>
+            <div className='easy'>
+                <BackgroundSVG/>
+                <div className='easy-content'>
+                    <div className='easy-image'>
+                        <img src={QuizzImage} alt="Icone Quizz" className='quizz-img'/>
+                    </div>
+                    <div className='easy-text'>
+                        <h2>Suivi facile</h2>
+                        <p>
+                            Gardez une liste organisée de vos séries en cours, terminées et à voir, avec la possibilité de noter et de laisser des commentaires sur chaque épisode. 
+                            Suivez votre progression, ne manquez aucun épisode, et partagez vos impressions. 
+                            Simplifiez votre expérience de visionnage dès maintenant !
+                        </p>
+                    </div>
+                    
+                </div>        
+            </div>
+            <div className='client'>
+                <div>
+                    <div className='client-image'>
+                        <img src={Lina} alt="Icone Quizz" className='quizz-img'/>
+                    </div>
+                    <div className='client-review'>
+                        <p>
+                        Break Anime a transformé ma façon de découvrir de nouveaux anime. Grâce au quizz, je trouve rapidement des recommandations personnalisées qui correspondent parfaitement à mes envies. Une application incontournable pour tous les fans d'anime !
+                        </p>
+                        <h4>
+                            Lina, 24 ans
+                        </h4>
+                    </div>
+                </div>
+                
+                <div>
+                    <div className='client-image'>
+                        <img src={Max} alt="Icone Quizz" className='quizz-img'/>
+                    </div>
+                    <div className='client-review'>
+                        <p>
+                        Break Anime a transformé ma façon de découvrir de nouveaux anime. Grâce au quizz, je trouve rapidement des recommandations personnalisées qui correspondent parfaitement à mes envies. Une application incontournable pour tous les fans d'anime !
+                        </p>
+                        <h4>
+                            Lina, 24 ans
+                        </h4>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }
