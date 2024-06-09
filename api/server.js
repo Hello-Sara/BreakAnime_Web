@@ -6,6 +6,7 @@ const animeRoutes = require('./route/animeRoutes');
 const genreRoutes = require('./route/genreRoutes');
 const userRoutes = require('./route/userRoutes');
 const seasonRoutes = require('./route/seasonRoutes');
+const adminRoutes = require('./route/adminRoutes');
 const Anime = require('./models/animeModel');
 const Genre = require('./models/genreModel');
 const Season = require('./models/seasonModel');
@@ -74,6 +75,7 @@ app.use('/api', animeRoutes);
 app.use('/api/resource', userRoutes);
 app.use('/api', genreRoutes);
 app.use('/api', seasonRoutes);
+app.use('/api', adminRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
