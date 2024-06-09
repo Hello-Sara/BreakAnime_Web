@@ -37,9 +37,9 @@ const isTokenExpired = (token) => {
   if (!decodedToken) {
     throw new Error('Invalid token');
   }
-  const currentTime = Math.floor(Date.now() / 1000);
-  console.log('EXPIRATION', decodedToken.exp);
-  if (decodedToken.exp < currentTime) {
+  const currentTime = Date.now();
+  const expirationTime = decodedToken.exp * 1000;
+  if (expirationTime < currentTime) {
     return true;
   }
   return false;
