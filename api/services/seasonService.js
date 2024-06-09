@@ -11,11 +11,29 @@ class SeasonService {
     }
 
     async createSeason(season) {
+        const existingSeason = await Season.findOne({ where: { season: season.season, year: season.year } });
+        if (existingSeason) {
+            throw new Error('Une saison avec cette combinaison de season et year existe déjà');
+        }
         return await Season.create(season);
     }
 
     async updateSeason(id, season) {
+        const existingSeason = await Season.findOne({ 
+            where: { 
+                season: season.season, 
+                year: season.year, 
+                id: { [Op.ne]: id } 
+            } 
+        });
+        if (existingSeason) {
+            throw new Error('Une saison avec cette combinaison de season et year existe déjà');
+        }
         return await Season.update(season, { where: { id: id } });
+    }
+
+    async findSeasonBySeasonAndYear(season, year) {
+        return await Season.findOne({ where: { season: season, year: year } });
     }
 
     async deleteSeason(id) {

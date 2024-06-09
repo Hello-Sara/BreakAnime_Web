@@ -8,5 +8,6 @@ router.get('/seasons/:id', seasonController.getSeasonById);
 router.post('/seasons', authenticateToken, isAdmin, seasonController.createSeason);
 router.put('/seasons/:id', authenticateToken, isAdmin, seasonController.updateSeason);
 router.delete('/seasons/:id', authenticateToken, isAdmin, seasonController.deleteSeason);
+router.get('/seasons/:season/:year', seasonController.findSeasonBySeasonAndYear);
 
 module.exports = router;
