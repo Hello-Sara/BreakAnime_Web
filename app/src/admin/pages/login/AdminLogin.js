@@ -32,10 +32,10 @@ const AdminLogin = (props) => {
                 localStorage.setItem('token', response.data.token);
                 navigate('/admin/dashboard');
             } else {
-                console.error(response.data.error);
+                console.error(response);
             }                
         } catch (error) {
-            console.error(error.error);
+            console.error(error);
             // Gérer l'erreur
         }
     };
