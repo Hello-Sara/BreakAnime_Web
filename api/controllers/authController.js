@@ -29,7 +29,9 @@ const adminLogin = async (req, res) => {
 
 const register = async (req, res) => {
   const user = req.body;
-  console.log(user);
+  if(user.password.length < 6 || user.password.length > 16) {
+    return res.status(400).json({ error: 'Password must be between 6 and 16 characters' });
+  }
   try {
     const token = await authService.register(user.name, user.email, user.username, user.password);
     res.json({ token });
