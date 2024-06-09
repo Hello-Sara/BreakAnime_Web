@@ -22,6 +22,11 @@ const AdminSeason = () => {
         if(!isConnected) {
             navigate('/admin');
         } else {
+            isTokenExpired().then((response) => {
+                if (response) {
+                    navigate('/admin');
+                }    
+            });
             document.body.classList.add('admin-home');
             fetchSeasons();
             return () => {
@@ -32,13 +37,27 @@ const AdminSeason = () => {
 
     const fetchSeasons = async () => {
         try {
-            const response = await axios.get('https://api.breakanime.ninja/api/seasons/', {
+            const response = await axios.get('https://api.breakanime.ninja/api/auth/verifyToken', {
                 headers: {
                     Authorization: `${localStorage.getItem('token')}`
                 }
             });
             setSeasons(response.data);
             setIsLoading(false);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
+    const isTokenExpired = async () => {
+        try {
+            const response = await axios.get('https://api.breakanime.ninja/api/auth/verify-token', {
+                headers: {
+                    Authorization: `${localStorage.getItem('token')}`
+                }
+            });
+            return response.data.expired;
         } catch (error) {
             console.error(error);
         }
