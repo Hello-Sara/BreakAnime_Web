@@ -1,0 +1,28 @@
+.add-user h2 {
+    color: #0e0e0e;
+}
+
+.add-user form {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-imput {
+    border-radius: 5px;
+    background-color: #3737375b;
+    border: 2px solid white;
+    padding: 20px;
+    color: white;
+    outline: none;
+    color: #0e0e0e;
+    padding: 10px 20px;
+}
+
+.user-label {
+    display: block;
+    width: 150px;
+}
+
+.add-user-btn {
+    margin-top: 60px;
+}

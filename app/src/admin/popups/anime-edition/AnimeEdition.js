@@ -8,13 +8,11 @@ const AnimeEdition = ({ anime, onStatusChange, onDescriptionChange, onTitleChang
     
 
     useEffect(() => {
-        // Remplacez cette URL par l'URL de votre API
         axios.get('https://api.breakanime.ninja/api/seasons/', {
             headers: {
                 Authorization: `${localStorage.getItem('token')}`
             }
         }).then(data =>  {setSeasons(data.data);  console.log(data)})
-        console.log(anime)
     }, []);
 
     return (
