@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import AdminMenu from '../../../components/molecules/admin-menu/AdminMenu';
 import './AdminAnime.css';
 import axios from 'axios';
@@ -8,6 +8,8 @@ import SearchBar from '../../../components/atoms/search-bar/SearchBar';
 import Popup from '../../../components/molecules/pop-up/Popup';
 import AnimeDetails from '../../popups/anime-details/AnimeDetails';
 import Actions from '../../popups/actions/Actions';
+import { AlertContext } from '../../../providers/Alert/AlertProvider';
+
 
 const AdminAnime = () => {
     const navigate = useNavigate();
@@ -31,6 +33,8 @@ const AdminAnime = () => {
 
     const [openPopupId, setOpenPopupId] = useState(null);
     const [openDetails, setOpenDetails] = useState(false);
+
+    const { showAlert } = useContext(AlertContext);
 
     
 
@@ -133,8 +137,9 @@ const AdminAnime = () => {
             headers: {
                 Authorization: `${localStorage.getItem('token')}`
             }
-        }).then((response) => {
-            console.log('response', response);
+        }).then(() => {
+            showAlert("Anime supprimé avec succès", "info", 3000);
+            setIsPopupOpen(false);
             fetchAnimes();
         }).catch((error) => {
             console.error(error);

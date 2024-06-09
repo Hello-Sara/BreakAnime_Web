@@ -9,6 +9,8 @@ import AdminAnime from '../admin/pages/admin-anime/AdminAnime';
 import AdminGenre from '../admin/pages/admin-genre/AdminGenre';
 import AdminSeason from '../admin/pages/admin-season/AdminSeason';
 
+import { AlertProvider } from '../providers/Alert/AlertProvider';
+
 import TagManager from 'react-gtm-module';
 
 
@@ -20,6 +22,7 @@ function App() {
   TagManager.initialize(tagManagerArgs)
  
   return (
+    <AlertProvider>
         <Router>
           {/* <Header /> */}
           <Routes>
@@ -34,6 +37,7 @@ function App() {
           </Routes>
           {/* <Footer /> */}
         </Router>
+      </AlertProvider>
   );
 }
 
