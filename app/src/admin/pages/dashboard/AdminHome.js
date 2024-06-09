@@ -20,6 +20,12 @@ const AdminHome = () => {
         .then(response => setStats(response.data))
         .catch(error => console.error(error));
         
+        isTokenExpired().then((response) => {
+            if (response) {
+                navigate('/admin');
+            }    
+        });
+        
         document.body.classList.add('admin-home');
         return () => {
           document.body.classList.remove('admin-home');
@@ -28,6 +34,19 @@ const AdminHome = () => {
             navigate('/admin');
         }        
     }, [isConnected, navigate]);
+
+    const isTokenExpired = async () => {
+        try {
+            const response = await axios.get('https://api.breakanime.ninja/api/auth/verifyToken', {
+                headers: {
+                    Authorization: `${localStorage.getItem('token')}`
+                }
+            });
+            return response.data.expired;
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     if(!isConnected) {
         return null;
