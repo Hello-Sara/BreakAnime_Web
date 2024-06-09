@@ -1,16 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AdminHome.css';
 import SecondaryBouton from '../../../components/atoms/secondary-bouton/SecondaryBouton';
 
 import LOGO from '../../../assets/logos/logo_VBlanc.png';
+import axios from 'axios';
 
 const AdminHome = () => {
+    const [stats, setStats] = useState(undefined); 
+    
+    
     useEffect(() => {
+        axios.get('https://api.breakanime.ninja/api/admin/stats', {
+            headers: {
+                Authorization: `${localStorage.getItem('token')}`
+            }
+        })
+        .then(response => setStats(response.data))
+        .catch(error => console.error(error));
+        
         document.body.classList.add('admin-home');
         return () => {
           document.body.classList.remove('admin-home');
         };
-    });
+    }, []);
 
     return (
         <div className="admin-container">
@@ -50,26 +62,38 @@ const AdminHome = () => {
                 <div className="admin-card-container">
                     <div className="admin-card anime-card">
                         <div className="admin-card-stats" style={{color: '#947a32'}}>
-                            <span>1300</span>
+                            <span>{stats?.animes}</span>
                         </div>
                         <div className="admin-card-footer">
-                            <SecondaryBouton name="Gestion des animes" style={{padding: '5px', "background-color": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'border-radius': '5px', 'backdrop-filter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Gestion des animes" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Ajouter un anime" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
                         </div>
                     </div>
                     <div className="admin-card genre-card">
                         <div className="admin-card-stats" style={{color: '#755645'}}>
-                            <span>70</span>
+                            <span>{stats?.genres}</span>
                         </div>
                         <div className="admin-card-footer">
-                            <SecondaryBouton name="Gestion des genres" style={{padding: '5px', "background-color": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'border-radius': '5px', 'backdrop-filter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Gestion des genres" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Ajouter un genre" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(206, 158, 131, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
                         </div>
                     </div>
                     <div className="admin-card season-card">
                         <div className="admin-card-stats" style={{color: '#5c3448'}}>
-                            <span>20</span>
+                        <span>{stats?.seasons}</span>
                         </div>
                         <div className="admin-card-footer">
-                            <SecondaryBouton name="Gestion des saisons" style={{padding: '5px', "background-color": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'border-radius': '5px', 'backdrop-filter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Gestion des saisons" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Ajouter une saison" style={{padding: '5px 10px 5px 10px',"color": "#fff", "backgroundColor": 'rgba(145, 83, 119, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                        </div>
+                    </div>
+                    <div className="admin-card user-card">
+                        <div className="admin-card-stats" style={{color: '#5e658c'}}>
+                        <span>{stats?.users}</span>
+                        </div>
+                        <div className="admin-card-footer">
+                            <SecondaryBouton name="Gestion des users" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Ajouter un user" style={{padding: '5px 10px 5px 10px',"color": "#fff", "backgroundColor": 'rgba(54, 55, 70, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
                         </div>
                     </div>
                 </div>
