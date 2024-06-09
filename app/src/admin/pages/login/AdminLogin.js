@@ -33,8 +33,6 @@ const AdminLogin = (props) => {
             //if (response.data.role === 1) {
                 localStorage.setItem('token', response.data.token);
                 navigate('/admin/dashboard');
-            //} else {
-                // Gérer le cas où l'utilisateur n'est pas un administrateur
             //}
         } catch (error) {
             console.error(error);
