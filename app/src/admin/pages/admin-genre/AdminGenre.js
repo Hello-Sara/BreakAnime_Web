@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../../../assets/loaders/search.gif';
 import Popup from '../../../components/molecules/pop-up/Popup';
 import AddGenre from '../../popups/add-genre/AddGenre';
+import EditGenre from '../../popups/edit-genre/EditGenre';
 
 const AdminGenre = () => {
     const [genres, setGenres] = useState([]);
@@ -14,13 +15,15 @@ const AdminGenre = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(15);
     const [isAddGenreOpen, setIsAddGenreOpen] = useState(false);
+    const [isEditGenreOpen, setIsEditGenreOpen] = useState(false);
+
+    const [items, setItems] = useState([]);
+
     const [openPopupId, setOpenPopupId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-    const currentItems = genres.slice(indexOfFirstItem, indexOfLastItem);
 
     useEffect(() => {
         const isConnected = !!localStorage.getItem('token');
@@ -61,6 +64,7 @@ const AdminGenre = () => {
                 }
             });
             setGenres(response.data);
+            setItems(response.data.slice(indexOfFirstItem, indexOfLastItem));
             setIsLoading(false);
         } catch (error) {
             console.error(error);
@@ -69,24 +73,42 @@ const AdminGenre = () => {
 
     const handleEdit = (genreId) => {
         setOpenPopupId(genreId); 
-        // Handle edit action for the anime with the given ID
-        console.log('Edit genre:', genreId);
+        setIsEditGenreOpen(true);
     };
 
     const handleDelete = (genreId) => {
-        // Handle delete action for the anime with the given ID
-        console.log('Delete genre:', genreId);
+        axios.delete(`https://api.breakanime.ninja/api/genre/${genreId}`, {
+            headers: {
+                Authorization: `${localStorage.getItem('token')}`
+            }
+        }).then(() => {
+            setIsLoading(true);
+            fetchGenres().then(() => setIsLoading(false));
+        }).catch((error) => {
+            console.error(error);
+        });
     };
 
     const handlePageChange = (event) => {
         setCurrentPage(Number(event.target.id));
     };
 
-    const pageNumbers = [];
+    let pageNumbers = [];
     for (let i = 1; i <= Math.ceil(genres.length / itemsPerPage); i++) {
         pageNumbers.push(i);
     }
 
+    useEffect(() => {        
+        let filteredGenres = genres.filter((genre) => {
+            const name = genre.name?.toLowerCase() || "";
+            const description = genre.description?.toLowerCase() || "";
+            return name.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase());
+        });
+        // Calculer les éléments actuels après le filtrage
+        setItems(filteredGenres.slice(indexOfFirstItem, indexOfLastItem));
+
+        setCurrentPage(1);
+    }, [searchTerm]);
 
     return (
         <div className="admin-container">
@@ -116,7 +138,7 @@ const AdminGenre = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentItems
+                            {items
                              .filter((genre) => {
                                 const name = genre.name?.toLowerCase() || "";
                                 const description = genre.description?.toLowerCase() || "";
@@ -147,6 +169,25 @@ const AdminGenre = () => {
                                                 setIsAddGenreOpen(false);
                                             }}
                                         />                                                                                                                                                                                                                         
+                                    </Popup>
+                                    <Popup isOpen={isEditGenreOpen && openPopupId === genre.id} centered={true} size='xxl' onClose={() => setIsEditGenreOpen(null)}>
+                                        <EditGenre
+                                            genre={genre}
+                                            onSave={(genre) => {
+                                                console.log(genre);
+                                                axios.put(`https://api.breakanime.ninja/api/genre/${genre.id}`, genre, {
+                                                    headers: {
+                                                        Authorization: `${localStorage.getItem('token')}`
+                                                    }
+                                                }).then(() => {
+                                                    setIsLoading(true);
+                                                    setOpenPopupId(null);
+                                                    fetchGenres().then(() => setIsLoading(false));
+                                                }).catch((error) => {
+                                                    console.error(error);
+                                                });
+                                            }}
+                                        />
                                     </Popup>
                                 </tr>
                             ))}
