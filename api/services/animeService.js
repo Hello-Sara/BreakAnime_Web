@@ -42,9 +42,9 @@ class AnimeService {
 
             animes = animes.map(anime => {
                 if(anime.status) {
-                    anime.status = AnimeService.mapStatus(plainAnime.status);
+                    anime.status = AnimeService.mapStatus(anime.status);
                 }
-                return plainAnime;
+                return anime;
             });
 
             return animes;
