@@ -4,15 +4,18 @@ import './AdminAnime.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../../assets/loaders/search.gif';
-import SecondaryBouton from '../../../components/atoms/secondary-bouton/SecondaryBouton';
 import SearchBar from '../../../components/atoms/search-bar/SearchBar';
 import Popup from '../../../components/molecules/pop-up/Popup';
 import AnimeDetails from '../../popups/anime-details/AnimeDetails';
+import Actions from '../../popups/actions/Actions';
 
 const AdminAnime = () => {
-    const [animes, setAnimes] = useState([]);
     const navigate = useNavigate();
+    
+    const [animes, setAnimes] = useState([]);
+    
     const [isLoading, setIsLoading] = useState(true);
+    
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(6);
     const [pageMaxOffset, setPageMaxOffset] = useState(10);  // Nombre de pages à afficher autour de la page courante [currentPage
@@ -20,6 +23,7 @@ const AdminAnime = () => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const [filteredAnimes, setFilteredAnimes] = useState([]); 
     let currentItems = filteredAnimes.slice(indexOfFirstItem, indexOfLastItem);
+    
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
     const spanRef = useRef();
@@ -62,7 +66,6 @@ const AdminAnime = () => {
     
         window.addEventListener('resize', handleResize);
     
-        // Supprimer le gestionnaire d'événements lorsque le composant est démonté
         return () => {
             window.removeEventListener('resize', handleResize);
         };
@@ -114,11 +117,9 @@ const AdminAnime = () => {
         }
     };
 
-    const handleShowDetails = (animeId) => {
-        // Handle edit action for the anime with the given ID
+    const handleShowDetails = () => {
         setIsPopupOpen(false);
         setOpenDetails(true);
-        console.log('Show details anime:', animeId);
     };
 
     const handleEdit = (animeId) => {
@@ -126,9 +127,18 @@ const AdminAnime = () => {
         console.log('Edit anime:', animeId);
     };
 
-    const handleDelete = (animeId) => {
+    const handleDelete = (anime) => {
         // Handle delete action for the anime with the given ID
-        console.log('Delete anime:', animeId);
+        axios.delete(`https://api.breakanime.ninja/api/animes/${anime.id}`, {
+            headers: {
+                Authorization: `${localStorage.getItem('token')}`
+            }
+        }).then((response) => {
+            console.log('response', response);
+            fetchAnimes();
+        }).catch((error) => {
+            console.error(error);
+        });
     };
 
     const handleAssociateGenre = (animeId) => {
@@ -176,31 +186,14 @@ const AdminAnime = () => {
                                     <td>
                                         <span className='actions' ref={spanRef} onClick={(event) => handleSpanClick(event, anime)}>...</span>
                                     </td>
-                                    <Popup isOpen={isPopupOpen && openPopupId === anime.id} top={popupPosition.top} left={popupPosition.left} onClose={() => setIsPopupOpen(false)}>                                                           
-                                        <SecondaryBouton 
-                                            Submit={() => selectedAnime && handleShowDetails(selectedAnime.titre)}                                                 
-                                            name={"Show details"} 
-                                            style={{ margin: '10px', padding: '6px 6px 6px 6px', "backgroundColor": '#fff', 'border': '2px solid #FEC200', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}}
-                                            onHoverStyle={{ margin: '10px', padding: '6px 6px 6px 6px', "backgroundColor": '#FEC200', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}}
-                                        />
-                                        <SecondaryBouton 
-                                            Submit={() => selectedAnime && handleEdit(selectedAnime.titre)}                                                 
-                                            name={"Edit"} 
-                                            style={{ margin: '10px', padding: '6px 6px 6px 6px', "backgroundColor": '#fff', 'border': '2px solid #494946', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}}
-                                            onHoverStyle={{ margin: '10px', padding: '6px 6px 6px 6px', 'color': '#fff', "backgroundColor": '#494946', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}}
-                                        />
-                                        <SecondaryBouton 
-                                            Submit={() => selectedAnime && handleAssociateGenre(selectedAnime.id)}                                                 
-                                            name={"Associate Genre"} 
-                                            style={{margin: '10px', padding: '6px 6px 6px 6px', "backgroundColor": '#fff', 'border': '2px solid #494946', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}}
-                                            onHoverStyle={{ margin: '10px', padding: '6px 6px 6px 6px','color': '#fff', "backgroundColor": '#494946', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}}
-                                        />
-                                        <SecondaryBouton 
-                                            Submit={() => selectedAnime && handleDelete(selectedAnime.id)}                                                 
-                                            name={"Delete"} 
-                                            style={{margin: '10px', padding: '6px 6px 6px 6px', "backgroundColor": '#fff', 'border': '2px solid #F25252', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer' }}
-                                            onHoverStyle={{ margin: '10px', padding: '6px 6px 6px 6px', 'color': '#fff', "backgroundColor": '#F25252', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}}
-                                        />
+                                    <Popup isOpen={isPopupOpen && openPopupId === anime.id} top={popupPosition.top} left={popupPosition.left} onClose={() => setIsPopupOpen(false)}>                                                                                                   
+                                        <Actions
+                                            onEdit={handleEdit}
+                                            onDelete={handleDelete}
+                                            onDetails={handleShowDetails}
+                                            item={selectedAnime}
+                                            itemSpecificButton={{ name: 'Associate Genre', action: handleAssociateGenre }}
+                                        />                                        
                                     </Popup>
                                 </tr>
                             ))}
