@@ -10,7 +10,7 @@ router.get('/genre', GenreController.getAllGenres);
 router.get('/genre/:id', GenreController.getGenreById);
 
 
-router.post('/genre/name', GenreController.getGenreByName);
+router.get('/genre/name/:name', GenreController.getGenreByName);
 
 // Créer un nouveau genre
 router.post('/genre', authenticateToken, isAdmin, GenreController.createGenre);

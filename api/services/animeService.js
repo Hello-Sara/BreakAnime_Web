@@ -21,7 +21,7 @@ class AnimeService {
                 }, {
                     model: Genre,
                     as: 'genres',
-                    attributes: ['name', 'description'],
+                    attributes: ['id', 'name', 'description'],
                     through: { attributes: [] } // Cela exclut les attributs de la table d'association
                 },
                 {
@@ -46,6 +46,13 @@ class AnimeService {
                     plainAnime.status = AnimeService.mapStatus(plainAnime.status);
                 }
                 return plainAnime;
+            });
+
+            animes = animes.map(anime => {
+                if(anime.status) {
+                    anime.status = AnimeService.mapStatus(anime.status);
+                }
+                return anime;
             });
 
             return animes;
@@ -256,7 +263,7 @@ class AnimeService {
                 throw error;
             }
     
-            await anime.addGenres(genres);
+            await anime.setGenres(genres);
         } catch (error) {
             throw error;
         }

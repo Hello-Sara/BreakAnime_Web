@@ -1,4 +1,5 @@
 const Genre = require('../models/genreModel');
+const { Op } = require('sequelize');
 
 exports.getAllGenres = async (req, res) => {
   try {
@@ -23,7 +24,7 @@ exports.getGenreById = async (req, res) => {
 
 exports.getGenreByName = async (req, res) => {
   try {
-    const genre = await Genre.findOne({ where: { name: req.body.name } });
+    const genre = await Genre.findAll({ where: { name: { [Op.like]: `%${req.params.name}%` } }, limit: 10 });
     if (!genre) {
       return res.status(404).json({ message: 'Genre non trouvé' });
     }
