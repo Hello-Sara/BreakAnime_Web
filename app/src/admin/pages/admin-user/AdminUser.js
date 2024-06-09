@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AdminMenu from '../../../components/molecules/admin-menu/AdminMenu';
+import Popup from '../../../components/molecules/pop-up/Popup';
+import Actions from '../../popups/actions/Actions';
 
 const AdminUser = () => {
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
+
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+    const spanRef = useRef();
+    const [selectedAnime, setSelectedAnime] = useState({});
+
+    const [openPopupId, setOpenPopupId] = useState(null);
+
 
     useEffect(() => {
         const isConnected = !!localStorage.getItem('token');
@@ -64,6 +74,17 @@ const AdminUser = () => {
         // Logique pour rétrograder un utilisateur en utilisateur normal
     };
 
+    const handleSpanClick = (event, anime) => {
+        if (isPopupOpen) {
+            setIsPopupOpen(false);
+        }
+        setSelectedAnime(anime);
+        const popupWidth = window.innerWidth * 0.12;  // Convertir 10vw + 2vw de marge en pixels
+        setPopupPosition({ top: event.clientY, left: event.clientX - popupWidth});
+        setOpenPopupId(anime.id);  // Ouvrir la popup de cet anime     
+        setIsPopupOpen(true); 
+    };
+
     return (        
         <div className="admin-container">
             <AdminMenu></AdminMenu>
@@ -83,11 +104,20 @@ const AdminUser = () => {
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>
-                                    <button onClick={() => editUser(user.id)}>Éditer</button>
-                                    <button onClick={() => deleteUser(user.id)}>Supprimer</button>
-                                    <button onClick={() => grantAdminAccess(user.id)}>Accorder l'accès administrateur</button>
-                                    <button onClick={() => downgradeToNormalUser(user.id)}>Rétrograder en utilisateur normal</button>
+                                    <span className='actions' ref={spanRef} onClick={(event) => handleSpanClick(event, user)}>...</span>
                                 </td>
+                                <Popup isOpen={isPopupOpen && openPopupId === user.id} top={popupPosition.top} left={popupPosition.left} onClose={() => setIsPopupOpen(false)}>                                                                                                   
+                                    <Actions
+                                        onEdit={editUser}
+                                        onDelete={deleteUser}
+                                        onDetails={() => console.log('Show details')}
+                                        item={user}
+                                        itemSpecificButtons={[
+                                            { name: 'Grant Admin', action: grantAdminAccess },
+                                            { name: 'Retrograte', action: downgradeToNormalUser }    
+                                        ]}
+                                    />                                        
+                                </Popup>
                             </tr>
                         ))}
                     </tbody>

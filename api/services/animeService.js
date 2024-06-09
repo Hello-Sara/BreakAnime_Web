@@ -34,6 +34,7 @@ class AnimeService {
                 const plainAnime = anime.get({ plain: true }); // Convertir l'objet Sequelize en une version modifiable
                 if(plainAnime.animeSeason) {
                     plainAnime.animeSeason = seasonService.mapSeason(plainAnime.animeSeason);
+                    plainAnime.type = AnimeService.mapType(plainAnime.type);
                 }
                 return plainAnime;
             });
@@ -77,6 +78,7 @@ class AnimeService {
                     const plainAnime = anime.get({ plain: true }); // Convertir l'objet Sequelize en une version modifiable
                     if(plainAnime.animeSeason) {
                         plainAnime.animeSeason = seasonService.mapSeason(plainAnime.animeSeason);
+                        plainAnime.type = AnimeService.mapType(plainAnime.type);
                     }
                     return plainAnime;
                 });
@@ -119,6 +121,7 @@ class AnimeService {
                 const plainAnime = anime.get({ plain: true });
                 if(plainAnime.animeSeason) {
                     plainAnime.animeSeason = seasonService.mapSeason(plainAnime.animeSeason);
+                    plainAnime.type = AnimeService.mapType(plainAnime.type);
                 }
                 return plainAnime;
             });
@@ -219,6 +222,25 @@ class AnimeService {
             await anime.addGenres(genres);
         } catch (error) {
             throw error;
+        }
+    }
+
+    static mapType(type) {
+        switch (type) {
+            case 0:
+                return 'TV';
+            case 1:
+                return 'MOVIE';
+            case 2:
+                return 'SPECIAL';
+            case 4:
+                return 'ONA';
+            case 5:
+                return 'MUSIC';
+            case 6:
+                return 'UNDEFINED';
+            default:
+                return 'UNKNOWN';
         }
     }
 }

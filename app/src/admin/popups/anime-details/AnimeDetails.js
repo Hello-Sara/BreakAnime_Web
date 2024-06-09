@@ -4,7 +4,7 @@ import Tag from '../../../components/atoms/tag/Tag';
 const AnimeDetails = ({ anime }) => {
     return (
         <div style={{maxHeight: '85vh', overflow: 'auto'}}>
-            <div style={{display: 'flex', gap: '20px', overflow: 'scroll'}}>
+            <div style={{display: 'flex', gap: '20px'}}>
                 <div style={{padding: '0px 50px'}}>
                     <img src={anime.picture} alt={anime.titre} />
                 </div>
