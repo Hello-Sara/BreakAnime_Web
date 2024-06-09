@@ -2,7 +2,7 @@ import React from 'react';
 import Menu from '../../components/molecules/menu/Menu';
 import Bouton from '../../components/atoms/bouton/Bouton';
 import Card from '../../components/organisms/cards/Card';
-import Bubble from '../../components/atoms/bubble/Bubble';
+import Bubble from '../../components/atoms/bubbles/Bubble';
 
 import IconQuizz from '../../assets/icons/global/quizz.svg';
 import IconCommunaute from '../../assets/icons/global/communaute.svg';
@@ -26,20 +26,20 @@ function HomePage() {
                     
             <div className="container hero">                               
                 <div className="bubble-container">
-                    <div className="rezero">
+                    <div className="rezero bubble-effect">
                         <Bubble src={ReZeroImage} size={"medium"}/>
                     </div>
 
-                    <div className="demon_slayer">
+                    <div className="demon_slayer bubble-effect">
                         <Bubble src={DemonSlayerImage} size={"large"}/>
                     </div>
-                    <div className="spyx">
+                    <div className="spyx bubble-effect">
                         <Bubble src={SpyXImage} size={"large"}/>
                     </div>
-                    <div className="x">
+                    <div className="x bubble-effect">
                         <Bubble src={XImage} size={"medium"}/>
                     </div>
-                    <div className="myhero">
+                    <div className="myhero bubble-effect">
                         <Bubble src={MyHeroImage} size={"small"}/>
                     </div>
                 </div>

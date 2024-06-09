@@ -6,6 +6,35 @@ p {
   margin: 0%;
 }
 
+.bubble-effect {
+  animation: moveUpDown 2s linear  infinite;
+}
+
+.bubble-effect:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.bubble-effect:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.bubble-effect:nth-child(3) {
+  animation-delay: 1s;
+}
+
+.bubble-effect:nth-child(4) {
+  animation-delay: 1.5s;
+}
+
+@keyframes moveUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
 .rezero {
   position: absolute;
   top: 4vh;
@@ -48,6 +77,80 @@ p {
   left: 0;
   right: 0;
 }
+
+@media (max-width: 600px) {
+  .bubble-container {
+    display: none;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 707px) {
+  
+.rezero {
+  position: absolute;
+  top: 4vh;
+  left: 8vw;
+  width: 12vw;
+}
+
+.demon_slayer {
+  position: absolute;
+  top: 25vh;
+  left: 4vw;
+  width: 25vw;
+}
+
+.spyx {
+  position: absolute;
+  top: 10vh;
+  left: 80vw;
+  width: 12vw;
+}
+
+.x {
+  position: absolute;
+  top: 25vh;
+  left: 78vw;
+  width: 12vw;
+}
+
+.myhero {
+  display: none;
+}
+}
+
+@media (min-width: 707px) and (max-width: 1350px) {
+  
+  .rezero {
+    position: absolute;
+    top: 2vh;
+    left: 8vw;
+    width: 12vw;
+  }
+  
+  .demon_slayer {
+    position: absolute;
+    top: 35vh;
+    left: 4vw;
+    width: 25vw;
+  }
+  
+  .spyx {
+    display: none;
+  }
+  
+  .x {
+    position: absolute;
+    top: 35vh;
+    left: 78vw;
+    width: 12vw;
+  }
+  
+  .myhero {
+    display: none;
+  }
+  }
+
 
 h2 {
   color: white;
