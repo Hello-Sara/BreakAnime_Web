@@ -11,6 +11,6 @@ router.get('/animes/genre/:genreName', animeController.getAnimesByGenreName);
 router.post('/animes', authenticateToken, isAdmin, animeController.createAnime);
 router.put('/animes/:id', authenticateToken, isAdmin, animeController.updateAnime);
 router.delete('/animes/:id', authenticateToken, isAdmin, animeController.deleteAnime);
-router.post('/anime/addGenres', animeController.addGenresToAnime);
+router.post('/anime/addGenres', authenticateToken, isAdmin, animeController.addGenresToAnime);
 
 module.exports = router;

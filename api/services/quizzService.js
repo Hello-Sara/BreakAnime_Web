@@ -28,11 +28,12 @@ exports.createQuestion = async (quizzData) => {
 };
 
 exports.createAnswerForQuestion = async (questionId, answerData) => {
+  console.log(questionId);
   const question = await Question.findByPk(questionId);
   if (!question) {
     throw new Error('Question non trouvée');
   }
-  return await Answer.create({ ...answerData, QuestionId: questionId });
+  return await Answer.create({ ...answerData, question_id: questionId });
 };
 
 exports.updateQuestion = async (id, questionData) => {
