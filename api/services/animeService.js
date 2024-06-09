@@ -189,6 +189,7 @@ class AnimeService {
             }
             await Synonyms.destroy({ where: { anime_id: id } });
             await anime.destroy();
+            return anime;
         } catch (error) {
             throw error;
         }
