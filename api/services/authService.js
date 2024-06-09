@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
 const config = require('../config/config');
 const { Op } = require('sequelize');
+const UserNotFoundError = require('../errors/UserNotFoundError');
+const InvalidPasswordError = require('../errors/InvalidPasswordError');
 
 
 const login = async (email, username, password) => {
@@ -37,13 +39,13 @@ const loginAsAdmin = async (email, password) => {
     } 
   });
   if (!admin) {
-    throw new Error("NotFound", 'Admin not found');
+    throw new UserNotFoundError('Admin not found');
   }
 
   const validPassword = await bcrypt.compare(password, admin.password);
 
   if (!validPassword) {
-    throw new Error('InvalidPassword', 'Invalid password');
+    throw new InvalidPasswordError('Invalid password');
   }
 
   const token = jwt.sign({ userId: admin.id }, config.secret, { expiresIn: '1h' });

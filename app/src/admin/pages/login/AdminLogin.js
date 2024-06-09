@@ -23,19 +23,19 @@ const AdminLogin = (props) => {
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('https://api.breakanime.ninja/api/auth/login', {
+            const response = await axios.post('https://api.breakanime.ninja/api/auth/admin/login', {
                 email: email,
                 password: password
             });
 
-            console.log(response);
-
-            //if (response.data.role === 1) {
+            if(response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 navigate('/admin/dashboard');
-            //}
+            } else {
+                console.error(response.data.error);
+            }                
         } catch (error) {
-            console.error(error);
+            console.error(error.error);
             // Gérer l'erreur
         }
     };
