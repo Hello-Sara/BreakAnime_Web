@@ -94,6 +94,9 @@ p {
   margin-top: 20vh;
   flex-wrap: wrap;
   gap: 100px;
+  position: relative;
+  bottom: -10vh;
+  z-index: 2;
 }
 
 .quizz-content {
@@ -348,9 +351,10 @@ h2 {
 
 .easy {
   position: relative;
-  top: -20vh;
-  z-index: -1000;
+  height: 100vh;
+  background-color: #F2A007;
 }
+
 
 .easy-content {
   z-index: 9999;
@@ -369,6 +373,15 @@ h2 {
   padding: 1%;
   margin-top: 5vh;
 } 
+
+.easy-text p br {
+  margin-bottom: 30px;
+}
+
+.easy-text p strong {
+  font-family: 'Montserrat Bold';
+  font-weight: bold;
+}
 
 .easy-text h2 {
   text-align: start;
@@ -397,47 +410,163 @@ h2 {
 
 .client {
   position: relative;
-  top: -40vh;
-  z-index: -2000;
   background-color: white;
-  height: 70vh;
   display: flex;
   justify-content: center;
   gap: 10vw;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
 }
 
-.client div {
+.client .review {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #0B0B0B;
+    width: 30vw;
+  }
+
+  .custom-shape-divider-top-1716114785 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1716114785 svg {
+    position: relative;
+    display: block;
+    width: calc(110% + 1.3px);
+    height: 98px;
+    transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1716114785 .shape-fill {
+    fill: #0B0B0B;
+}
+
+.custom-shape-divider-bottom-1716115317 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1716115317 svg {
+  position: relative;
+  display: block;
+  width: calc(110% + 1.3px);
+  height: 98px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom-1716115317 .shape-fill {
+  fill: #FFFFFF;
+}
+
+.contact {
+  margin-top: 10vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  position: relative;
+}
+
+.right-group-star {
+  position: absolute;
+  right: 5vw;
+  top: 35%;
+}
+
+.rgs-1 {
+  position: absolute;
+  right: 0;
+  top: -100%;
+  right: 6vw;
+  width: 3vw;
+}
+
+.rgs-2 {
+  position: absolute;
+  right: 0;
+  top: -3vh;
+  right: 5vw;
+  width: 1.8vw;
+}
+
+.rgs-3 {
+  position: absolute;
+  right: 0;
+  top: 3vh;
+  right: 4vw;
+  width: 1.1vw;
+}
+
+.left-group-star {
+  position: absolute;
+  left: 0;
+  bottom: 15%;
+  left: 5vw;
+  width: 1vw;
+}
+
+.lgs-1 {
+  position: absolute;
+  left: 0;
+  bottom: -100%;
+  left: 6vw;
+  width: 3vw;
+}
+
+.lgs-2 {
+  position: absolute;
+  left: 0;
+  bottom: -3vh;
+  left: 5vw;
+  width: 1.8vw;
+}
+
+.lgs-3 {
+  position: absolute;
+  left: 0;
+  bottom: 3vh;
+  left: 4vw;
+  width: 1.1vw;
+}
+
+footer {
+  margin-top: 10vh;
+  min-height: 18vh;
+  background-color: #FEC200;
+  padding: 4rem;
   display: flex;
-  flex-direction: row;
+  justify-content: start;
+  gap: 10vw;
+}
+
+.footer-logo {
+  display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  top: 5vh;
-  color: #0B0B0B;
-  width: 25vw;
 }
 
-.client div .client-image {
-  display: flex;
-  justify-content: center;
-  align-items: start;
-}
-
-.client div .client-image img {
-  width: 40%;
-}
-
-.client div .client-review {
-  display: flex;
-  flex-direction: column;
-}
-
-.client div p {
-  color: #0B0B0B;
+footer div li {
+  list-style-type: none;
+  font-family: 'Montserrat Medium';
   font-size: 1.2em;
-  text-align: start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #0B0B0B;
 }
 
-.client > div > h4 {
-  text-align: start;
+footer div h5 {
+  font-family: 'Montserrat Bold';
+  font-size: 1.5em;
+  color: white;
 }
+
