@@ -179,6 +179,8 @@ const AdminUser = () => {
                                         }).then((response) => {
                                             showAlert("User editer avec succès", "info", 3000);
                                             setIsEditUserPopupOpen(false);
+                                            setIsPopupOpen(false);
+                                            fetchUsers();
                                         }).catch((error) => {
                                             showAlert("Error happened while editing user", "error", 3000);
                                             setIsEditUserPopupOpen(false);
