@@ -1,57 +1,49 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+// Assurez-vous d'importer la fonction pour faire des requêtes HTTP, par exemple `axios`
 
-const AssociateGenre = () => {
-    const [genres, setGenres] = useState([]);
-    const [selectedGenres, setSelectedGenres] = useState([]);
+function AssociateGenre() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [genres, setGenres] = useState([]);
 
-    useEffect(() => {
-        // Fetch genres from the backend
-        const fetchGenres = async () => {
-            try {
-                const response = await fetch('/api/genres');
-                const data = await response.json();
-                setGenres(data);
-            } catch (error) {
-                console.error('Error fetching genres:', error);
-            }
-        };
-
-        fetchGenres();
-    }, []);
-
-    const handleGenreSelection = (genreId) => {
-        if (selectedGenres.includes(genreId)) {
-            setSelectedGenres(selectedGenres.filter((id) => id !== genreId));
-        } else {
-            setSelectedGenres([...selectedGenres, genreId]);
+  useEffect(() => {
+    const fetchGenres = async () => {
+      if (searchTerm) {
+        try {
+          // Remplacez `URL_API` par l'URL de votre API et ajustez le chemin si nécessaire
+          const response = await axios.get("https://api.breakanime.ninja/api/genre/name", {
+            body: {
+              name: searchTerm,
+            },
+          });  
+          setGenres(response.data);
+        } catch (error) {
+          console.error('Erreur lors de la récupération des genres', error);
+          // Gérer l'erreur comme vous le souhaitez
         }
+      } else {
+        setGenres([]);
+      }
     };
 
-    const handleAssociateGenres = () => {
-        // Send selected genres to the backend to associate with the current anime
-        // Implement your logic here
-    };
+    fetchGenres();
+  }, [searchTerm]);
 
-    return (
-        <div>
-            <h2>Associate Genres</h2>
-            <div>
-                <input type="text" placeholder="Search genre" />
-                {/* Render the list of genres */}
-                {genres.map((genre) => (
-                    <div key={genre.id}>
-                        <input
-                            type="checkbox"
-                            checked={selectedGenres.includes(genre.id)}
-                            onChange={() => handleGenreSelection(genre.id)}
-                        />
-                        <label>{genre.name}</label>
-                    </div>
-                ))}
-            </div>
-            <button onClick={handleAssociateGenres}>Associate Genres</button>
-        </div>
-    );
-};
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Rechercher un genre..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <div>
+        {genres.map((genre) => (
+          <div key={genre.id}>{genre.name}</div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default AssociateGenre;
