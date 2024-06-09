@@ -40,7 +40,7 @@ class SeasonService {
         return await Season.destroy({ where: { id: id } });
     }
 
-    static mapSeason(season) {
+    mapSeason(season) {
         switch(season.season) {
             case 0:
                 return {id: season.id, 'season' : 'Printemps', year: season.year};
