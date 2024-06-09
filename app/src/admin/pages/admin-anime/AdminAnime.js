@@ -282,7 +282,9 @@ const AdminAnime = () => {
                                 />
                             </Popup>
                             <Popup isOpen={openAssociation} centered={true} onClose={() => setOpenAssociation(false)} size='xxl'>
-                                <AssociateGenre />
+                                <AssociateGenre 
+                                    anime={selectedAnime}
+                                />
                             </Popup>
                         </tbody>                    
                     </table>

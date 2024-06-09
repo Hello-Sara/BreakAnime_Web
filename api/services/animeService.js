@@ -255,7 +255,7 @@ class AnimeService {
                 throw error;
             }
     
-            await anime.addGenres(genres);
+            await anime.setGenres(genres);
         } catch (error) {
             throw error;
         }
