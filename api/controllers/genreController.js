@@ -23,7 +23,7 @@ exports.getGenreById = async (req, res) => {
 
 exports.getGenreByName = async (req, res) => {
   try {
-    const genre = await Genre.findOne({ where: { name: req.params.name } });
+    const genre = await Genre.findOne({ where: { name: req.body.name } });
     if (!genre) {
       return res.status(404).json({ message: 'Genre non trouvé' });
     }
