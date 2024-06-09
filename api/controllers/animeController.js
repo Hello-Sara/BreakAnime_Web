@@ -23,6 +23,17 @@ exports.getAnimeById = async (req, res) => {
   }
 };
 
+// Rechercher un anime par titre ou synonyme
+exports.searchAnimeByTitleOrSynonym = async (req, res) => {
+  try {
+    const searchTerm = req.query.term;
+    const animes = await animeService.searchAnimeByTitleOrSynonym(searchTerm);
+    res.status(200).json(animes);
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur lors de la recherche des animes', error: error.message });
+  }
+};
+
 // Créer un nouvel anime
 exports.createAnime = async (req, res) => {
   try {

@@ -3,6 +3,7 @@ const Synonyms = require('../models/synonymsModel');
 const Genre = require('../models/genreModel');
 const AnimeSeason = require('../models/seasonModel');
 const seasonService = require('./seasonService');
+const { Op } = require('sequelize');
 
 class AnimeService {
     
@@ -81,6 +82,45 @@ class AnimeService {
 
             return anime;
         } catch (error) {
+            throw error;
+        }
+    }
+
+    // Rechercher un anime par titre ou synonyme
+    static async searchAnimeByTitleOrSynonym(term) {
+        try {
+            const animes = await Anime.findAll({
+                where: {
+                    [Op.or]: [
+                        { titre: { [Op.like]: '%' + term + '%' } },
+                        { '$synonyms.name$': { [Op.like]: '%' + term + '%' } }
+                    ]
+                },
+                include: [{
+                    model: Synonyms,
+                    as: 'synonyms',
+                    attributes: ['name']
+                }, {
+                    model: Genre,
+                    as: 'genres',
+                    attributes: ['name', 'description'],
+                    through: { attributes: [] }
+                }, {
+                    model: AnimeSeason,
+                    as: 'animeSeason',
+                    attributes: ['season', 'year', 'id']
+                }]
+            });
+
+            return animes.map(anime => {
+                const plainAnime = anime.get({ plain: true });
+                if(plainAnime.animeSeason) {
+                    plainAnime.animeSeason = seasonService.mapSeason(plainAnime.animeSeason);
+                }
+                return plainAnime;
+            });
+        } catch (error) {
+            console.log(error);
             throw error;
         }
     }
