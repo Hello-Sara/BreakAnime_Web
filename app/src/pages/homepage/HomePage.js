@@ -2,6 +2,8 @@ import React from 'react';
 import Bouton from '../../components/atoms/cta-bouton/CTABouton';
 import Card from '../../components/organisms/cards/Card';
 import Bubble from '../../components/atoms/bubbles/Bubble';
+import ClientReview from '../../components/atoms/client-review/ClientReview';
+import ContactForm from '../../components/atoms/contact-form/ContactForm';
 
 import IconQuizz from '../../assets/icons/global/quizz.svg';
 import IconCommunaute from '../../assets/icons/global/communaute.svg';
@@ -15,9 +17,12 @@ import XImage from '../../assets/img/x.png';
 import MyHeroImage from '../../assets/img/myhero.png';
 import StarImage from '../../assets/img/star.png';
 import QuizzImage from '../../assets/img/quizz-app.png';
+
 import { ReactComponent as BackgroundSVG } from '../../assets/icons/global/backround.svg';
 import Max from '../../assets/img/max.png';
 import Lina from '../../assets/img/lina.png';
+import LogoBW from '../../assets/logos/logo_VBW.png';
+
 
 import './HomePage.css';
 
@@ -126,7 +131,11 @@ function HomePage() {
                 </div>
             </div>
             <div className='easy'>
-                <BackgroundSVG/>
+                <div class="custom-shape-divider-top-1716114785">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+                    </svg>
+                </div>
                 <div className='easy-content'>
                     <div className='easy-image'>
                         <img src={QuizzImage} alt="Icone Quizz" className='quizz-img'/>
@@ -134,43 +143,66 @@ function HomePage() {
                     <div className='easy-text'>
                         <h2>Suivi facile</h2>
                         <p>
-                            Gardez une liste organisée de vos séries en cours, terminées et à voir, avec la possibilité de noter et de laisser des commentaires sur chaque épisode. 
-                            Suivez votre progression, ne manquez aucun épisode, et partagez vos impressions. 
-                            Simplifiez votre expérience de visionnage dès maintenant !
+                            Gardez une liste organisée de vos séries en cours, terminées et à voir, avec la possibilité de noter et de laisser des commentaires sur chaque épisode. <br/>
+                            Suivez votre progression, ne manquez aucun épisode, et partagez vos impressions. <br/>
+                            <strong>Simplifiez votre expérience de visionnage dès maintenant !</strong>
                         </p>
                     </div>
                     
-                </div>        
+                </div>   
+                <div class="custom-shape-divider-bottom-1716115317">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+                    </svg>
+                </div>     
             </div>
             <div className='client'>
-                <div>
-                    <div className='client-image'>
-                        <img src={Lina} alt="Icone Quizz" className='quizz-img'/>
-                    </div>
-                    <div className='client-review'>
-                        <p>
-                        Break Anime a transformé ma façon de découvrir de nouveaux anime. Grâce au quizz, je trouve rapidement des recommandations personnalisées qui correspondent parfaitement à mes envies. Une application incontournable pour tous les fans d'anime !
-                        </p>
-                        <h4>
-                            Lina, 24 ans
-                        </h4>
-                    </div>
+                <ClientReview 
+                    imageSrc={Lina} 
+                    altText="Icone Quizz" 
+                    reviewText="Break Anime a transformé ma façon de découvrir de nouveaux anime. Grâce au quizz, je trouve rapidement des recommandations personnalisées qui correspondent parfaitement à mes envies. Une application incontournable pour tous les fans d'anime !" 
+                    reviewer="Lina, 24 ans" 
+                />      
+                <ClientReview 
+                    imageSrc={Max} 
+                    altText="Icone Quizz" 
+                    reviewText="Break Anime a transformé ma façon de découvrir de nouveaux anime. Grâce au quizz, je trouve rapidement des recommandations personnalisées qui correspondent parfaitement à mes envies. Une application incontournable pour tous les fans d'anime !" 
+                    reviewer="Maxime, 32 ans" 
+                />                            
+            </div>
+            <div className='contact'>
+                <div className='right-group-star'>
+                    <img src={StarImage} alt="Icone Quizz" className='rgs-1'/>
+                    <img src={StarImage} alt="Icone Quizz" className='rgs-2'/>
+                    <img src={StarImage} alt="Icone Quizz" className='rgs-3'/>
                 </div>
                 
-                <div>
-                    <div className='client-image'>
-                        <img src={Max} alt="Icone Quizz" className='quizz-img'/>
-                    </div>
-                    <div className='client-review'>
-                        <p>
-                        Break Anime a transformé ma façon de découvrir de nouveaux anime. Grâce au quizz, je trouve rapidement des recommandations personnalisées qui correspondent parfaitement à mes envies. Une application incontournable pour tous les fans d'anime !
-                        </p>
-                        <h4>
-                            Lina, 24 ans
-                        </h4>
-                    </div>
-                </div>
+                <ContactForm />
+
+                <div className='left-group-star'>
+                    <img src={StarImage} alt="Icone Quizz" className='lgs-1'/>
+                    <img src={StarImage} alt="Icone Quizz" className='lgs-2'/>
+                    <img src={StarImage} alt="Icone Quizz" className='lgs-3'/>
+                </div>                
             </div>
+            <footer>
+                <div className='footer-logo'>
+                    <img src={LogoBW} alt="Icone Quizz" className='logo'/>
+                </div>
+                <div className='footer-col-1'>
+                    <h5>Entreprise</h5>
+                    <li>Contact</li>
+                    <li>Confidentialité</li>
+                    <li>CGU</li>
+                </div>
+                <div className='footer-col-2'>
+                    <h5>Découvrir</h5>
+                    <li>L’univers</li>
+                    <li>Contexte</li>
+                    <li>Les plus</li>
+                    <li>Témoignage</li>
+                </div>
+            </footer>
         </>
     );
 }

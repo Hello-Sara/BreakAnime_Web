@@ -1,0 +1,93 @@
+/* CSS */
+.contact-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 45vw;
+    margin: auto;
+    background-color: #171717;
+    border-radius: 25px;
+    color: white;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+}
+
+.contact-form-container h1 {
+    font-size: 3.5em;
+}
+
+.contact-form-container h4 strong {
+    font-size: 1.5em;
+    color: #de9f27;
+}
+
+.contact-form-container h4 {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.contact-form-container h1, .contact-form-container h4 {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.contact-input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+.contact-input-container label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.contact-input-container input, .contact-input-container textarea {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contact-form button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .contact-form {
+        padding: 20px;
+    }
+}
+
+input, textarea {
+    background-color: #D9D9D91A;
+    border-radius: 5px;
+    border: 2px solid white;
+    padding: 20px;
+    color: white;
+    outline: none;
+}
+
+textarea {
+    height: 200px;
+    resize: vertical;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #555454;
+}

@@ -1,0 +1,39 @@
+.review .review-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+  }
+  
+.review .review-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: 100%;
+    width: 70%;
+  }
+  
+  .review .review-image img {
+    width: 60%;
+  }
+  
+  .review .client-review {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .review p {
+    color: #0B0B0B;
+    font-size: 1.2em;
+    text-align: start;
+    font-family: 'Montserrat';
+  }
+  
+  .review > .review-text > h4 {
+    width: 100%;
+    font-family: 'Montserrat';
+    text-align: start;
+  }
