@@ -13,6 +13,11 @@ const AdminUser = () => {
             // Rediriger vers la page de connexion
             navigate('/admin');
         } else {
+            isTokenExpired().then((response) => {
+                if (response) {
+                    navigate('/admin');
+                }    
+            });
             document.body.classList.add('admin-home');
             fetchUsers();
             return () => {
@@ -21,9 +26,11 @@ const AdminUser = () => {
         }
     }, []);
 
+
+
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('https://api.breakanime.ninja/api/resource/users/', {
+            const response = await axios.get('https://api.breakanime.ninja/api/auth/verifyToken', {
                 headers: {
                     Authorization: `${localStorage.getItem('token')}`
                 }
@@ -33,6 +40,20 @@ const AdminUser = () => {
             console.error(error);
         }
     };
+
+    const isTokenExpired = async () => {
+        try {
+            const response = await axios.get('https://api.breakanime.ninja/api/auth/verify-token', {
+                headers: {
+                    Authorization: `${localStorage.getItem('token')}`
+                }
+            });
+            return response.data.expired;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
 
     const editUser = (userId) => {
         // Logique pour éditer un utilisateur

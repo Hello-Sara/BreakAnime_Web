@@ -39,8 +39,6 @@ const isTokenExpired = (token) => {
   }
   const currentTime = Date.now();
   const expirationTime = decodedToken.exp * 1000;
-  console.log('Current time:', currentTime);
-  console.log('Expiration time:', expirationTime);
   if (expirationTime < currentTime) {
     return true;
   }
@@ -64,7 +62,7 @@ const loginAsAdmin = async (email, password) => {
     throw new InvalidPasswordError('Invalid password');
   }
 
-  const token = jwt.sign({ userId: admin.id }, config.secret, { expiresIn: '30s' });
+  const token = jwt.sign({ userId: admin.id }, config.secret, { expiresIn: '1h' });
 
   return token;
 };
