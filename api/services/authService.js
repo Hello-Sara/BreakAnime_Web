@@ -96,5 +96,6 @@ const register = async (name, email, username, password) => {
   module.exports = {
     login,
     register, 
-    loginAsAdmin
+    loginAsAdmin,
+    isTokenExpired
   };
