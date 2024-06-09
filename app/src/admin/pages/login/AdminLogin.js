@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './AdminLogin.css';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import Bouton from '../../../components/atoms/bouton/Bouton';
 
@@ -12,15 +14,32 @@ import BG03 from '../../../assets/img/admin/BG_Img03.png';
 import BG04 from '../../../assets/img/admin/BG_Img04.png';
 import BG05 from '../../../assets/img/admin/BG_Img05.png';
 
-const AdminLogin = () => {
+const AdminLogin = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        // Ici, vous pouvez implémenter la logique de connexion avec email et mot de passe
-        console.log('Email:', email);
-        console.log('Password:', password);
+
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.post('https://api.breakanime.ninja/api/auth/login', {
+                email: email,
+                password: password
+            });
+
+            console.log(response);
+
+            //if (response.data.role === 1) {
+                localStorage.setItem('token', response.data.token);
+                navigate('/admin/dashboard');
+            //} else {
+                // Gérer le cas où l'utilisateur n'est pas un administrateur
+            //}
+        } catch (error) {
+            console.error(error);
+            // Gérer l'erreur
+        }
     };
 
     return (
@@ -60,7 +79,7 @@ const AdminLogin = () => {
                 <div className="login-module">
                     {/* Partie droite pour le module de connexion */}
                     <img src={LOGO} alt="Logo" className="logo" />
-                    <h2 className="login-header">BreakAnime Admin</h2>
+                    <h2 className="login-header">BreakAdmin</h2>
                     <form onSubmit={handleLogin} className="login-form">
                         <div className="form-group">
                             <label htmlFor="email" className="form-label">Email:</label>
@@ -70,8 +89,8 @@ const AdminLogin = () => {
                             <label htmlFor="password" className="form-label">Mot de passe:</label>
                             <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-input" required />
                         </div>
-                        <div>
-                            <Bouton name="connexion" onClick={() => console.log('Bouton cliqué')} />
+                        <div className='connection'>
+                            <Bouton name="connexion" Submit={(e) => handleLogin(e)} />
                         </div>
                     </form>
                 </div>
