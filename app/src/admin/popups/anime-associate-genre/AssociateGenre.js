@@ -4,13 +4,13 @@ import './AssociateGenre.css';
 
 const API_URL = "https://api.breakanime.ninja/api/genre/name/";
 
-function AssociateGenre(anime) {
+const AssociateGenre = ({anime, handleReassociate}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
 
   useEffect(() => {
-    setSelectedGenres(anime.anime.genres);
+    setSelectedGenres(anime.genres);
   }, []);
 
   useEffect(() => {
@@ -39,6 +39,7 @@ function AssociateGenre(anime) {
         return [...prevSelectedGenres, genre];
       }
     });
+    anime.genres = selectedGenres.map((g) => g.id);
   };
 
   const unSelectGenre = (genre) => { 
@@ -46,6 +47,7 @@ function AssociateGenre(anime) {
     setSelectedGenres((prevSelectedGenres) => {
       return prevSelectedGenres.filter((g) => g.id !== genre.id);
     });
+    anime.genres = selectedGenres.map((g) => g.id);
   };
 
 
@@ -80,6 +82,7 @@ function AssociateGenre(anime) {
           </label>
         ))}
       </div>
+      <button onClick={handleReassociate}>Associate</button>
     </div>
   );
 }

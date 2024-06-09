@@ -243,6 +243,9 @@ class AnimeService {
                 throw error;
             }
     
+            // Remove existing genre associations
+            await anime.setGenres([]);
+    
             const genres = await Genre.findAll({
                 where: {
                     id: genreIds
@@ -255,6 +258,7 @@ class AnimeService {
                 throw error;
             }
     
+            // Create new genre associations
             await anime.setGenres(genres);
         } catch (error) {
             throw error;
