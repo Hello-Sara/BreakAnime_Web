@@ -31,6 +31,7 @@ const AssociateGenre = ({anime, handleReassociate}) => {
   }, [searchTerm]);
 
   const handleGenreChange = (genre) => {
+    console.log('selected genres', selectedGenres);
     setSelectedGenres((prevSelectedGenres) => {
       const isGenreSelected = prevSelectedGenres.some((g) => g.id === genre.id);
       if (isGenreSelected) {
@@ -39,17 +40,20 @@ const AssociateGenre = ({anime, handleReassociate}) => {
         return [...prevSelectedGenres, genre];
       }
     });
-    anime.genres = selectedGenres.map((g) => g.id);
+    console.log('selected genres', selectedGenres);
   };
 
   const unSelectGenre = (genre) => { 
-    console.log('unselect genre', genre);
+    console.log('unselect genre', genre.id);
     setSelectedGenres((prevSelectedGenres) => {
       return prevSelectedGenres.filter((g) => g.id !== genre.id);
     });
-    anime.genres = selectedGenres.map((g) => g.id);
+    console.log('selected genres', selectedGenres);
   };
 
+  const handleSubmit = () => {
+    handleReassociate(selectedGenres.map((g) => g.id));
+  };
 
   return (
     <div>
@@ -82,7 +86,7 @@ const AssociateGenre = ({anime, handleReassociate}) => {
           </label>
         ))}
       </div>
-      <button onClick={handleReassociate}>Associate</button>
+      <button onClick={handleSubmit}>Associate</button>
     </div>
   );
 }

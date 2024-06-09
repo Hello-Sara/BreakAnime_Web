@@ -284,21 +284,22 @@ const AdminAnime = () => {
                             <Popup isOpen={openAssociation} centered={true} onClose={() => setOpenAssociation(false)} size='xxl'>
                                 <AssociateGenre 
                                     anime={selectedAnime}
-                                    handleReassociate={() => {
+                                    handleReassociate={(genres) => {
                                         axios.post(`https://api.breakanime.ninja/api/anime/addGenres`, {
                                             animeId: selectedAnime.id,
-                                            genreIds: selectedAnime.genres
+                                            genreIds: genres
                                         }, {
                                             headers: {
                                                 Authorization: `${localStorage.getItem('token')}`
                                             }
                                         }).then(() => {
                                             showAlert("Genres associés avec succès", "info", 3000);
+                                            fetchAnimes();
                                         }).catch((error) => {
                                             console.error(error);
                                         });
-                                        fetchAnimes();
                                         setOpenAssociation(false);
+                                        setIsLoading(true); 
                                     }}
                                 />
                             </Popup>
