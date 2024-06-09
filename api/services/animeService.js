@@ -21,7 +21,7 @@ class AnimeService {
                 }, {
                     model: Genre,
                     as: 'genres',
-                    attributes: ['name', 'description'],
+                    attributes: ['id', 'name', 'description'],
                     through: { attributes: [] } // Cela exclut les attributs de la table d'association
                 },
                 {
