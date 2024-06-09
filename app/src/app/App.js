@@ -7,6 +7,7 @@ import AdminHome from '../admin/pages/dashboard/AdminHome';
 import AdminUser from '../admin/pages/admin-user/AdminUser';
 import AdminAnime from '../admin/pages/admin-anime/AdminAnime';
 import AdminGenre from '../admin/pages/admin-genre/AdminGenre';
+import AdminSeason from '../admin/pages/admin-season/AdminSeason';
 
 import TagManager from 'react-gtm-module';
 
@@ -29,6 +30,7 @@ function App() {
             <Route path='/admin/users' element={<AdminUser />} />      
             <Route path='/admin/animes' element={<AdminAnime />} />
             <Route path='/admin/genres' element={<AdminGenre />} />        
+            <Route path='/admin/seasons' element={<AdminSeason />} />
           </Routes>
           {/* <Footer /> */}
         </Router>
