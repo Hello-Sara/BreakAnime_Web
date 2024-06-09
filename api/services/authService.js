@@ -20,6 +20,20 @@ const login = async (email, username, password) => {
     throw new Error('User not found');
   }
 
+  const isTokenExpired = (token) => {
+    const decodedToken = jwt.decode(token);
+    if (!decodedToken) {
+      throw new Error('Invalid token');
+    }
+    const currentTime = Math.floor(Date.now() / 1000);
+    if (decodedToken.exp < currentTime) {
+      return true;
+    }
+    return false;
+  };
+
+
+
   const validPassword = await bcrypt.compare(password, user.password);
 
   if (!validPassword) {
@@ -48,7 +62,7 @@ const loginAsAdmin = async (email, password) => {
     throw new InvalidPasswordError('Invalid password');
   }
 
-  const token = jwt.sign({ userId: admin.id }, config.secret, { expiresIn: '1h' });
+  const token = jwt.sign({ userId: admin.id }, config.secret, { expiresIn: '30s' });
 
   return token;
 };

@@ -11,6 +11,21 @@ const login = async (req, res) => {
   }
 };
 
+
+const verifyToken = async (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ error: 'No token provided' });
+  }
+  try {
+    const decodedToken = await authService.isTokenExpired(token);
+    req.user = decodedToken;
+    next();
+  } catch (err) {
+    return res.status(401).json({ error: 'Invalid token' });
+  }
+};
+
 const adminLogin = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -43,5 +58,6 @@ const register = async (req, res) => {
 module.exports = {
   login,
   register,
-  adminLogin
+  adminLogin,
+  verifyToken
 };
