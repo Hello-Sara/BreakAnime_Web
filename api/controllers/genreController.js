@@ -21,18 +21,31 @@ exports.getGenreById = async (req, res) => {
   }
 };
 
+exports.getGenreByName = async (req, res) => {
+  try {
+    const genre = await Genre.findOne({ where: { name: req.params.name } });
+    if (!genre) {
+      return res.status(404).json({ message: 'Genre non trouvé' });
+    }
+    res.status(200).json(genre);
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur lors de la récupération du genre', error: error.message });
+  }
+}
+
 exports.createGenre = async (req, res) => {
   try {
-
+    // Convertit le nom du genre en minuscules
+    const genreName = req.body.name.toLowerCase();
 
     // Vérifie si un genre avec le même nom existe déjà
-    const existingGenre = await Genre.findOne({ where: { name: req.body.name } });
+    const existingGenre = await Genre.findOne({ where: { name: genreName } });
     if (existingGenre) {
       return res.status(400).json({ message: 'Ce genre existe déjà' });
     }
 
-    // Crée le nouveau genre
-    const genre = await Genre.create(req.body);
+    // Crée le nouveau genre avec le nom en minuscules
+    const genre = await Genre.create({ ...req.body, name: genreName });
     res.status(201).json(genre);
   } catch (error) {
     res.status(500).json({ message: 'Erreur lors de la création du genre', error: error.message });

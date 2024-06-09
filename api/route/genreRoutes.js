@@ -9,6 +9,9 @@ router.get('/genre', GenreController.getAllGenres);
 // Afficher un genre spécifique par son ID
 router.get('/genre/:id', GenreController.getGenreById);
 
+
+router.get('/genre/name/:name', GenreController.getGenreByName);
+
 // Créer un nouveau genre
 router.post('/genre', authenticateToken, isAdmin, GenreController.createGenre);
 
