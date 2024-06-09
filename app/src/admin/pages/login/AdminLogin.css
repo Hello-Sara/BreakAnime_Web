@@ -13,6 +13,7 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     width: 800px;
     height: 450px;
+    max-width: 90%;
 }
 
 .anime-list {
@@ -22,6 +23,7 @@
     object-fit: cover;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+    scrollbar-width: none;
 }
 
 .login-module {
@@ -68,17 +70,34 @@
     width: 100%;
 }
 
-.submit-button {
-    background-color: #F25252;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
+.connection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.submit-button:hover {
-    background-color: #F23064;
+
+/* Media Query pour les écrans de taille moyenne (tablette) */
+@media (max-width: 768px) {
+    .login-card {
+        flex-direction: column; /* Change la direction de flex pour empiler les éléments verticalement */
+        height: auto; /* Permet à la hauteur de s'ajuster automatiquement */
+    }
+
+    .anime-list, .login-module {
+        flex: none; /* Supprime la flexibilité pour permettre aux éléments de s'empiler verticalement */
+        width: 100%; /* Permet aux éléments de prendre toute la largeur */
+    }
+}
+
+/* Media Query pour les petits écrans (mobile) */
+@media (max-width: 480px) {
+    .login-header {
+        font-size: 24px; /* Réduit la taille de la police pour les petits écrans */
+    }
+
+    .logo {
+        width: 80px; /* Réduit la taille du logo pour les petits écrans */
+    }
 }

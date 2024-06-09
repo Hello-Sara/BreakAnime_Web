@@ -1,0 +1,84 @@
+/* Styles pour le menu latéral */
+body {
+    background-color: #F8F7F5;
+}
+
+
+
+.sidebar-nav {
+    padding-top: 30px;
+    margin: 0 30px;
+}   
+
+.logo-item {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #0B0B0B;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-item {
+    margin-bottom: 1vh;
+}
+
+.sidebar-link {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    font-family: 'montserrat', sans-serif;
+    border-bottom: 1px solid #fff; /* Changez #000 à la couleur de votre choix */
+    padding: 10px 0; /* Ajoute un espace au-dessus et en dessous de chaque lien */
+}
+
+/* Styles pour le contenu principal */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.account-icon {
+    font-size: 24px;
+    color: #333;
+    margin-left: auto;
+}
+
+/* Styles pour les cartes */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex-basis: calc(33.3333% - 20px);
+    box-sizing: border-box;
+}
+
+.card h2 {
+    margin-bottom: 10px;
+}
