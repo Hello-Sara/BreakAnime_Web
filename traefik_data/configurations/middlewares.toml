@@ -1,0 +1,18 @@
+  [http]
+    [http.middlewares]
+        [http.middlewares.secureHeaders]
+            [http.middlewares.secureHeaders.headers]
+                sslRedirect = true
+                forceSTSHeader = true
+                stsIncludeSubdomains = true
+                stsPreload = true
+                stsSeconds = 31_536_000
+                
+  #      [http.middlewares.user-auth]
+  #          [http.middlewares.user-auth.basicAuth]
+  
+
+        [http.middlewares.middlewares-rate-limit]
+            [http.middlewares.middlewares-rate-limit.rateLimit]
+                average = 100
+                burst = 50

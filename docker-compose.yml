@@ -1,0 +1,107 @@
+version: '3.8'
+
+services:
+  web:
+    build: 
+      context: ./app/
+      dockerfile: dockerfile
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=proxy"
+        - "traefik.http.routers.breakanime-secure.entrypoints=websecure"
+        - "traefik.http.routers.breakanime-secure.rule=Host(`www.${DOMAIN_NAME}`)"
+        - "traefik.http.routers.breakanime-secure.service=breakanime"
+        - "traefik.http.services.breakanime.loadbalancer.server.port=3000" 
+
+    networks:
+      - frontend
+    volumes:
+      - ./app:/app
+
+
+  api:
+    build: 
+      context: ./api/
+      dockerfile: dockerfile
+    env_file:
+      - .env  
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.api-breakanime-secure.entrypoints=websecure"
+      - "traefik.http.routers.api-breakanime-secure.rule=Host(`api.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.api-breakanime-secure.service=api-breakanime"
+      - "traefik.http.services.api-breakanime.loadbalancer.server.port=3000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+    networks:
+      - backend
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.5
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.phpmyadmin-secure.entrypoints=websecure"
+      - "traefik.http.routers.phpmyadmin-secure.rule=Host(`phpmyadmin.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.phpmyadmin-secure.service=phpmyadmin"
+      - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80" 
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    depends_on:
+      - db
+    networks:
+      - backend
+
+
+
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    hostname: traefik
+    restart: always
+    ports:
+        - "80:80"
+        - "443:443" 
+    networks:
+      - backend
+      - frontend
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik_data/traefik.toml:/etc/traefik/traefik.toml
+      - ./traefik_data/acme.json:/acme.json
+      - ./traefik_data/configurations:/configurations
+    labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=proxy"
+        - "traefik.http.routers.traefik-secure.entrypoints=websecure"
+        - "traefik.http.routers.traefik-secure.rule=Host(`traefik.${DOMAIN_NAME}`)"
+        - "traefik.http.routers.traefik-secure.service=api@internal"
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge
