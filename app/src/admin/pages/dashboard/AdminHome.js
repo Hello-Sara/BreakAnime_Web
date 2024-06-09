@@ -8,7 +8,6 @@ import axios from 'axios';
 const AdminHome = () => {
     const [stats, setStats] = useState(undefined); 
     
-    
     useEffect(() => {
         axios.get('https://api.breakanime.ninja/api/admin/stats', {
             headers: {
@@ -66,7 +65,7 @@ const AdminHome = () => {
                         </div>
                         <div className="admin-card-footer">
                             <SecondaryBouton name="Gestion des animes" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
-                            <SecondaryBouton name="Ajouter un anime" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Ajouter un anime" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
                         </div>
                     </div>
                     <div className="admin-card genre-card">
@@ -75,7 +74,7 @@ const AdminHome = () => {
                         </div>
                         <div className="admin-card-footer">
                             <SecondaryBouton name="Gestion des genres" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
-                            <SecondaryBouton name="Ajouter un genre" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(206, 158, 131, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Ajouter un genre" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
                         </div>
                     </div>
                     <div className="admin-card season-card">
@@ -84,7 +83,7 @@ const AdminHome = () => {
                         </div>
                         <div className="admin-card-footer">
                             <SecondaryBouton name="Gestion des saisons" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
-                            <SecondaryBouton name="Ajouter une saison" style={{padding: '5px 10px 5px 10px',"color": "#fff", "backgroundColor": 'rgba(145, 83, 119, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Ajouter une saison" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
                         </div>
                     </div>
                     <div className="admin-card user-card">
@@ -93,7 +92,7 @@ const AdminHome = () => {
                         </div>
                         <div className="admin-card-footer">
                             <SecondaryBouton name="Gestion des users" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
-                            <SecondaryBouton name="Ajouter un user" style={{padding: '5px 10px 5px 10px',"color": "#fff", "backgroundColor": 'rgba(54, 55, 70, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton name="Ajouter un user" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
                         </div>
                     </div>
                 </div>
