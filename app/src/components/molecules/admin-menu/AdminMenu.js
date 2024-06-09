@@ -25,7 +25,7 @@ const AdminMenu = () => {
                     <a href="/admin/users" className="sidebar-link">Gérer les utilisateurs</a>
                 </li>
                 <li className="sidebar-item">
-                    <a href="#" className="sidebar-link">Gérer les Animes</a>
+                    <a href="/admin/animes" className="sidebar-link">Gérer les Animes</a>
                 </li>
                 <li className="sidebar-item">
                     <a href="#" className="sidebar-link">Gestion des Genres</a>
