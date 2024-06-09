@@ -81,7 +81,11 @@ const AdminHome = () => {
                         <span>{stats?.seasons}</span>
                         </div>
                         <div className="admin-card-footer">
-                            <SecondaryBouton name="Gestion des saisons" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton 
+                                name="Gestion des saisons" 
+                                style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}
+                                Submit={() => navigate('/admin/seasons')}
+                            />
                             <SecondaryBouton name="Ajouter une saison" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
                         </div>
                     </div>

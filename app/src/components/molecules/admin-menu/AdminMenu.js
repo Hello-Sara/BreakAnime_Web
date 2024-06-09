@@ -31,7 +31,7 @@ const AdminMenu = () => {
                     <a href="/admin/genres" className="sidebar-link">Gestion des Genres</a>
                 </li>
                 <li className="sidebar-item">
-                    <a href="#" className="sidebar-link">Gestion des Saisons/Année</a>
+                    <a href="/admin/seasons" className="sidebar-link">Gestion des Saisons/Année</a>
                 </li>
                 <li className="sidebar-item sidebar-action">
                     <SecondaryBouton 
