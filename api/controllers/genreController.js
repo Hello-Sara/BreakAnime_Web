@@ -24,7 +24,7 @@ exports.getGenreById = async (req, res) => {
 
 exports.getGenreByName = async (req, res) => {
   try {
-    const genre = await Genre.findAll({ where: { name: { [Op.like]: `%${req.params.name}%` } } });
+    const genre = await Genre.findAll({ where: { name: { [Op.like]: `%${req.params.name}%` } } }).limit(10);
     if (!genre) {
       return res.status(404).json({ message: 'Genre non trouvé' });
     }
