@@ -78,9 +78,49 @@ p {
   right: 0;
 }
 
+.problematic-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10vh;
+}
+
+.problematic {
+  width: 60%;
+  background: url('../../assets/img/radial-gradient.png'), linear-gradient(236.45deg, #F23064 0%, #8C1C3A 100%);
+  background-position: center;
+  padding: 60px 80px 60px 80px;
+  margin: 100px;
+  border-radius: 15px;
+}
+
+.problematic p {
+  text-align: left;
+}
+
+.problematic h2 {
+  color: #0B0B0B;
+  font-family: 'nuku';
+}
+
+.problematic p {
+  color: #0B0B0B;
+}
+
+.problematic p strong {
+  font-family: 'Montserrat Bold';
+  font-weight: bold;
+}
+
 @media (max-width: 600px) {
   .bubble-container {
     display: none;
+  }
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -151,6 +191,13 @@ p {
   }
   }
 
+.scroll-arrow {
+  animation: moveUpDown 2s linear  infinite;
+}
+
+.card {
+  margin: 2vw;
+}
 
 h2 {
   color: white;
