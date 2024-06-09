@@ -42,13 +42,13 @@ class SeasonService {
 
     static mapSeason(season) {
         switch(season.season) {
-            case '0':
+            case 0:
                 return {id: season.id, 'season' : 'Printemps', year: season.year};
-            case '1':
+            case 1:
                 return {id: season.id, 'season' :'Été', year: season.year};
-            case '2':
+            case 2:
                 return {id: season.id, 'season' :'Automne', year: season.year};
-            case '3':
+            case 3:
                 return {id: season.id, 'season' :'Hiver', year: season.year};
             default:
                 return {id: season.id, 'season' :'Inconnu', year: season.year};
