@@ -28,7 +28,7 @@ const AdminMenu = () => {
                     <a href="/admin/animes" className="sidebar-link">Gérer les Animes</a>
                 </li>
                 <li className="sidebar-item">
-                    <a href="#" className="sidebar-link">Gestion des Genres</a>
+                    <a href="/admin/genres" className="sidebar-link">Gestion des Genres</a>
                 </li>
                 <li className="sidebar-item">
                     <a href="#" className="sidebar-link">Gestion des Saisons/Année</a>

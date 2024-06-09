@@ -68,7 +68,11 @@ const AdminHome = () => {
                             <span>{stats?.genres}</span>
                         </div>
                         <div className="admin-card-footer">
-                            <SecondaryBouton name="Gestion des genres" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
+                            <SecondaryBouton 
+                                name="Gestion des genres" 
+                                style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(255, 255, 255, 0.95)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}
+                                Submit={() => navigate('/admin/genres')}
+                            />
                             <SecondaryBouton name="Ajouter un genre" style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}/>
                         </div>
                     </div>
