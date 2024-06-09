@@ -18,6 +18,12 @@ Genre.associate = function(models) {
       foreignKey: 'genre_id',
       otherKey: 'anime_id'
     });
+
+    Genre.belongsToMany(models.Answer, {
+      through: 'answer_genre',
+      foreignKey: 'genre_id',
+      otherKey: 'answer_id'
+    });
 };
 
 module.exports = Genre;

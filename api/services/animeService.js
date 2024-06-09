@@ -186,6 +186,17 @@ class AnimeService {
                 throw error;
             }
             await anime.update(animeData);
+
+            if (animeData.seasonId) {
+                const season = await AnimeSeason.findByPk(animeData.seasonId);
+                if (!season) {
+                    const error = new Error('Saison non trouvée');
+                    error.name = 'NOT_FOUND';
+                    throw error;
+                }
+    
+                await anime.setAnimeSeason(season);
+            }
             if (synonyms && synonyms.length > 0) {
                 // Supprimer les anciens synonymes
                 await Synonyms.destroy({ where: { anime_id: id } });
