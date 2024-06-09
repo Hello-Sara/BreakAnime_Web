@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from '../../atoms/icons/logo/Logo';
-import Bouton from '../../atoms/bouton/Bouton';
+import Bouton from '../../atoms/cta-bouton/CTABouton';
 import burgerIcon from '../../../assets/icons/global/burger.svg'; 
 import './Menu.css';
 

@@ -5,7 +5,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import Bouton from '../../../components/atoms/bouton/Bouton';
+import Bouton from '../../../components/atoms/cta-bouton/CTABouton';
 
 import LOGO from '../../../assets/logos/logo_VNoir.png';
 import BG01 from '../../../assets/img/admin/BG_Img01.png';

@@ -1,6 +1,5 @@
 import React from 'react';
-import Menu from '../../components/molecules/menu/Menu';
-import Bouton from '../../components/atoms/bouton/Bouton';
+import Bouton from '../../components/atoms/cta-bouton/CTABouton';
 import Card from '../../components/organisms/cards/Card';
 import Bubble from '../../components/atoms/bubbles/Bubble';
 
