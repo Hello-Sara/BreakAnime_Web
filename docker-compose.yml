@@ -107,3 +107,6 @@ networks:
     driver: bridge
   frontend:
     driver: bridge
+
+volumes:
+  db_data:
