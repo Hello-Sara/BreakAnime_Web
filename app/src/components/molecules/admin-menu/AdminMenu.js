@@ -36,7 +36,8 @@ const AdminMenu = () => {
                 <li className="sidebar-item sidebar-action">
                     <SecondaryBouton 
                         name="Déconnexion" 
-                        style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}
+                        style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', 'cursor': 'pointer' }}
+                        onHoverStyle={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', 'cursor': 'pointer' }}
                         Submit={() => handleDeconnection()}
                     />
                 </li>
