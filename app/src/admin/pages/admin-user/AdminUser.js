@@ -39,6 +39,7 @@ const AdminUser = () => {
                     Authorization: `${localStorage.getItem('token')}`
                 }
             });
+            console.log('users',response.data);
             setUsers(response.data);
         } catch (error) {
             console.error(error);
@@ -66,12 +67,32 @@ const AdminUser = () => {
         // Logique pour supprimer un utilisateur
     };
 
-    const grantAdminAccess = (userId) => {
-        // Logique pour accorder l'accès administrateur à un utilisateur
+    const grantAdminAccess = (user) => {
+        axios.put(`https://api.breakanime.ninja/api/resource/user/${user.id}`, {
+            role: 1
+        }, {
+            headers: {
+                Authorization: `${localStorage.getItem('token')}`
+            }
+        }).then((response) => {
+            console.log(response.data);
+        }).catch((error) => {
+            console.error(error);
+        });
     };
 
-    const downgradeToNormalUser = (userId) => {
-        // Logique pour rétrograder un utilisateur en utilisateur normal
+    const downgradeToNormalUser = (user) => {
+       axios.put(`https://api.breakanime.ninja/api/resource/user/${user.id}`, {
+            role: 0
+        }, {
+            headers: {
+                Authorization: `${localStorage.getItem('token')}`
+            }
+        }).then((response) => {
+            console.log(response.data);
+        }).catch((error) => {
+            console.error(error);
+        });
     };
 
     const handleSpanClick = (event, anime) => {
@@ -99,7 +120,19 @@ const AdminUser = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user) => (
+                    {users.map((user) => {
+                        const itemSpecificButtons = [
+                            { name: 'Edit', action: editUser },
+                            { name: 'Delete', action: deleteUser }
+                        ];
+
+                        if (user.role === 0) {
+                            itemSpecificButtons.push({ name: 'Grant Admin', action: grantAdminAccess });
+                        } else if (user.role === 1) {
+                            itemSpecificButtons.push({ name: 'Retrograte', action: downgradeToNormalUser });
+                        }
+
+                        return (
                             <tr key={user.id}>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
@@ -107,19 +140,14 @@ const AdminUser = () => {
                                     <span className='actions' ref={spanRef} onClick={(event) => handleSpanClick(event, user)}>...</span>
                                 </td>
                                 <Popup isOpen={isPopupOpen && openPopupId === user.id} top={popupPosition.top} left={popupPosition.left} onClose={() => setIsPopupOpen(false)}>                                                                                                   
-                                    <Actions
-                                        onEdit={editUser}
-                                        onDelete={deleteUser}
-                                        onDetails={() => console.log('Show details')}
-                                        item={user}
-                                        itemSpecificButtons={[
-                                            { name: 'Grant Admin', action: grantAdminAccess },
-                                            { name: 'Retrograte', action: downgradeToNormalUser }    
-                                        ]}
+                                    <Actions                                
+                                        item={user}                                        
+                                        itemSpecificButtons={itemSpecificButtons}
                                     />                                        
                                 </Popup>
                             </tr>
-                        ))}
+                        );
+                    })}
                     </tbody>
                 </table>
             </div>            
