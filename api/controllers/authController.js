@@ -18,9 +18,12 @@ const verifyToken = async (req, res) => {
     return res.status(401).json({ error: 'No token provided' });
   }
   try {
-    const decodedToken = await authService.isTokenExpired(token);
-    req.user = decodedToken;
-    return res.status(200).json({ message: 'Token is valid' });
+    const isTokenExpired = await authService.isTokenExpired(token);
+    if(isTokenExpired) {
+      return res.status(200).json({ expired: true });
+    } else {
+      return res.status(200).json({ expired: false });
+    }
   } catch (err) {
     return res.status(401).json({ error: 'Invalid token' });
   }
