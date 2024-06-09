@@ -1,18 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AdminMenu from '../../../components/molecules/admin-menu/AdminMenu';
 import Popup from '../../../components/molecules/pop-up/Popup';
 import Actions from '../../popups/actions/Actions';
+import EditUser from '../../popups/edit-user/EditUser';
+import { AlertContext } from '../../../providers/Alert/AlertProvider';
 
 const AdminUser = () => {
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
-
+    const { showAlert } = useContext(AlertContext);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isEditUserPopupOpen, setIsEditUserPopupOpen] = useState(false);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
     const spanRef = useRef();
-    const [selectedAnime, setSelectedAnime] = useState({});
+    const [selectedUser, setSelectedUser] = useState({});
 
     const [openPopupId, setOpenPopupId] = useState(null);
 
@@ -39,7 +42,6 @@ const AdminUser = () => {
                     Authorization: `${localStorage.getItem('token')}`
                 }
             });
-            console.log('users',response.data);
             setUsers(response.data);
         } catch (error) {
             console.error(error);
@@ -60,11 +62,21 @@ const AdminUser = () => {
     };
 
     const editUser = (userId) => {
-        // Logique pour éditer un utilisateur
+        setIsPopupOpen(userId);
+        setIsEditUserPopupOpen(true);
     };
 
     const deleteUser = (userId) => {
-        // Logique pour supprimer un utilisateur
+        axios.delete(`https://api.breakanime.ninja/api/resource/user/${selectedUser.id}`, {
+            headers: {
+                Authorization: `${localStorage.getItem('token')}`
+            }
+        }).then((response) => {
+            showAlert("User supprimé avec succès", "info", 3000);
+            setUsers(users.filter(user => user.id !== userId));
+        }).catch((error) => {
+            showAlert("Error happened while deleting user", "error", 3000);
+        });
     };
 
     const grantAdminAccess = (user) => {
@@ -95,14 +107,15 @@ const AdminUser = () => {
         });
     };
 
-    const handleSpanClick = (event, anime) => {
+    const handleSpanClick = (event, user) => {
         if (isPopupOpen) {
             setIsPopupOpen(false);
         }
-        setSelectedAnime(anime);
+
+        setSelectedUser(user);
         const popupWidth = window.innerWidth * 0.12;  // Convertir 10vw + 2vw de marge en pixels
         setPopupPosition({ top: event.clientY, left: event.clientX - popupWidth});
-        setOpenPopupId(anime.id);  // Ouvrir la popup de cet anime     
+        setOpenPopupId(user.id);  // Ouvrir la popup de cet anime     
         setIsPopupOpen(true); 
     };
 
@@ -144,6 +157,35 @@ const AdminUser = () => {
                                         item={user}                                        
                                         itemSpecificButtons={itemSpecificButtons}
                                     />                                        
+                                </Popup>
+                                <Popup centered={true} isOpen={isEditUserPopupOpen  && openPopupId === user.id}  onClose={() => setIsEditUserPopupOpen(false)} size='xxl'>
+                                    <EditUser user={selectedUser} handleSave={e => {
+                                        console.log(selectedUser);
+                                        e.preventDefault();
+                                        
+                                        axios.put(`https://api.breakanime.ninja/api/resource/user/${selectedUser.id}`, {
+                                            name: selectedUser.name,
+                                            email: selectedUser.email
+                                        },{
+                                            headers: {
+                                                Authorization: `${localStorage.getItem('token')}`
+                                            }
+                                        }).then((response) => {
+                                            showAlert("User editer avec succès", "info", 3000);
+                                            setIsEditUserPopupOpen(false);
+                                        }).catch((error) => {
+                                            showAlert("Error happened while editing user", "error", 3000);
+                                            setIsEditUserPopupOpen(false);
+                                        }); 
+                                    }} 
+                                    handleEditName={(e) => {
+                                        setSelectedUser({...user, name: e.target.value});        
+                                    }}
+
+                                    handleEditEmail={(e) => {
+                                        setSelectedUser({...user, email: e.target.value});
+                                    }}
+                                    />
                                 </Popup>
                             </tr>
                         );

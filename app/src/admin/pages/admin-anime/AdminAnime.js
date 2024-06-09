@@ -233,51 +233,51 @@ const AdminAnime = () => {
                                <AnimeDetails anime={selectedAnime} />
                             </Popup>
                             <Popup isOpen={openEdition} centered={true} onClose={() => setOpenEdition(false)} size='xxl'>
-                            <AnimeEdition 
-                                anime={selectedAnime}
-                                onStatusChange={(event) => {
-                                    setSelectedAnime({ ...selectedAnime, status: event.target.value });
-                                }}
-                                onDescriptionChange={(event) => {
-                                    setSelectedAnime({ ...selectedAnime, description: event.target.value });
-                                }}
-                                onTitleChange={(event) => {
-                                    setSelectedAnime({ ...selectedAnime, titre: event.target.value });
-                                }}
-                                onSeasonChange={(event) => {
-                                    console.log('value',event.target.value);
-                                    setSelectedAnime({ ...selectedAnime, animeSeason: event.target.value });
-                                }}
-                                onEpisodeCountChange={(event) => {
-                                    setSelectedAnime({ ...selectedAnime, episodes: event.target.value });
-                                }}
+                                <AnimeEdition 
+                                    anime={selectedAnime}
+                                    onStatusChange={(event) => {
+                                        setSelectedAnime({ ...selectedAnime, status: event.target.value });
+                                    }}
+                                    onDescriptionChange={(event) => {
+                                        setSelectedAnime({ ...selectedAnime, description: event.target.value });
+                                    }}
+                                    onTitleChange={(event) => {
+                                        setSelectedAnime({ ...selectedAnime, titre: event.target.value });
+                                    }}
+                                    onSeasonChange={(event) => {
+                                        console.log('value',event.target.value);
+                                        setSelectedAnime({ ...selectedAnime, animeSeason: event.target.value });
+                                    }}
+                                    onEpisodeCountChange={(event) => {
+                                        setSelectedAnime({ ...selectedAnime, episodes: event.target.value });
+                                    }}
 
-                                onSave={(event) => {
-                                    event.preventDefault();
-                                    console.log('anime',selectedAnime);
-                                    if(selectedAnime.description === '' || selectedAnime.titre === '' || selectedAnime.animeSeason === '' || selectedAnime.episodes === '') {
-                                        showAlert('Veuillez remplir tous les champs', 'error', 3000);
-                                    } else {
-                                        axios.put(`https://api.breakanime.ninja/api/animes/${selectedAnime.id}`, {
-                                            titre: selectedAnime.titre,
-                                            description: selectedAnime.description,
-                                            status: selectedAnime.status,
-                                            episodes: selectedAnime.episodes,
-                                            seasonId: Number(selectedAnime.animeSeason)
-                                        }, {
-                                            headers: {
-                                                Authorization: `${localStorage.getItem('token')}`
-                                            }
-                                        }).then(() => {
-                                            showAlert("Anime modifié avec succès", "info", 3000);
-                                            fetchAnimes();
-                                            setOpenEdition(false);
-                                        }).catch((error) => {
-                                            console.error(error);
-                                        });
-                                    }
-                                }}
-                            />
+                                    onSave={(event) => {
+                                        event.preventDefault();
+                                        console.log('anime',selectedAnime);
+                                        if(selectedAnime.description === '' || selectedAnime.titre === '' || selectedAnime.animeSeason === '' || selectedAnime.episodes === '') {
+                                            showAlert('Veuillez remplir tous les champs', 'error', 3000);
+                                        } else {
+                                            axios.put(`https://api.breakanime.ninja/api/animes/${selectedAnime.id}`, {
+                                                titre: selectedAnime.titre,
+                                                description: selectedAnime.description,
+                                                status: selectedAnime.status,
+                                                episodes: selectedAnime.episodes,
+                                                seasonId: Number(selectedAnime.animeSeason)
+                                            }, {
+                                                headers: {
+                                                    Authorization: `${localStorage.getItem('token')}`
+                                                }
+                                            }).then(() => {
+                                                showAlert("Anime modifié avec succès", "info", 3000);
+                                                fetchAnimes();
+                                                setOpenEdition(false);
+                                            }).catch((error) => {
+                                                console.error(error);
+                                            });
+                                        }
+                                    }}
+                                />
                             </Popup>
                         </tbody>                    
                     </table>

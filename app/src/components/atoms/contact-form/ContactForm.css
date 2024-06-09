@@ -74,7 +74,7 @@
     }
 }
 
-input, textarea {
+.contact-form-container input, textarea {
     background-color: #D9D9D91A;
     border-radius: 5px;
     border: 2px solid white;
