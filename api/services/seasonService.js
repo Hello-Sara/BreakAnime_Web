@@ -2,7 +2,7 @@ const Season = require('../models/seasonModel');
 
 class SeasonService {
     async getAllSeasons() {
-        const seasons = await Season.findAll();
+        const seasons = await Season.findAll().orderBy('year', 'DESC');
        // console.log(seasons);
         return seasons.map(animeSeason => this.mapSeason(animeSeason));
     }
