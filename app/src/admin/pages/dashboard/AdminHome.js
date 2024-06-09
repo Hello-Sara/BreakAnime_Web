@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './AdminHome.css';
 import SecondaryBouton from '../../../components/atoms/secondary-bouton/SecondaryBouton';
+import { useNavigate } from 'react-router-dom';
 
 import LOGO from '../../../assets/logos/logo_VBlanc.png';
 import axios from 'axios';
 
 const AdminHome = () => {
     const [stats, setStats] = useState(undefined); 
+    const navigate = useNavigate();
+    const isConnected = !!localStorage.getItem('token');
     
     useEffect(() => {
+        if(isConnected) {
         axios.get('https://api.breakanime.ninja/api/admin/stats', {
             headers: {
                 Authorization: `${localStorage.getItem('token')}`
@@ -21,7 +25,20 @@ const AdminHome = () => {
         return () => {
           document.body.classList.remove('admin-home');
         };
-    }, []);
+        } else {
+            navigate('/admin');
+        }        
+    }, [isConnected, navigate]);
+
+    let handleDeconnection = () => {
+        localStorage.removeItem('token');
+        navigate('/admin');
+    }
+
+    if(!isConnected) {
+        return null;
+    } 
+    
 
     return (
         <div className="admin-container">
@@ -42,6 +59,13 @@ const AdminHome = () => {
                     </li>
                     <li className="sidebar-item">
                         <a href="#" className="sidebar-link">Gestion des Saisons/Année</a>
+                    </li>
+                    <li className="sidebar-item sidebar-action">
+                        <SecondaryBouton 
+                            name="Déconnexion" 
+                            style={{padding: '5px 10px 5px 10px', "backgroundColor": 'rgba(229, 193, 79, 1)', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)' }}
+                            Submit={() => handleDeconnection()}
+                        />
                     </li>
                 </ul>
             </nav>
