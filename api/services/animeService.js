@@ -41,9 +41,8 @@ class AnimeService {
             });
 
             animes = animes.map(anime => {
-                const plainAnime = anime.get({ plain: true });
-                if(plainAnime.status) {
-                    plainAnime.status = AnimeService.mapStatus(plainAnime.status);
+                if(anime.status) {
+                    anime.status = AnimeService.mapStatus(plainAnime.status);
                 }
                 return plainAnime;
             });

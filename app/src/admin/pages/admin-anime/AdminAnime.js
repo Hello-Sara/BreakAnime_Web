@@ -10,6 +10,7 @@ import AnimeDetails from '../../popups/anime-details/AnimeDetails';
 import Actions from '../../popups/actions/Actions';
 import { AlertContext } from '../../../providers/Alert/AlertProvider';
 import AnimeEdition from '../../popups/anime-edition/AnimeEdition';
+import AssociateGenre from '../../popups/anime-associate-genre/AssociateGenre';
 
 
 const AdminAnime = () => {
@@ -35,6 +36,7 @@ const AdminAnime = () => {
     const [openPopupId, setOpenPopupId] = useState(null);
     const [openDetails, setOpenDetails] = useState(false);
     const [openEdition, setOpenEdition] = useState(false);
+    const [openAssociation, setOpenAssociation] = useState(false);
 
     const { showAlert } = useContext(AlertContext);
     
@@ -149,8 +151,8 @@ const AdminAnime = () => {
     };
 
     const handleAssociateGenre = (animeId) => {
-        // Handle associate genre action for the anime with the given ID
-        console.log('Associate genre to anime:', animeId);
+        setIsPopupOpen(false);
+        setOpenAssociation(true);
     };
 
 
@@ -278,6 +280,9 @@ const AdminAnime = () => {
                                         }
                                     }}
                                 />
+                            </Popup>
+                            <Popup isOpen={openAssociation} centered={true} onClose={() => setOpenAssociation(false)} size='xxl'>
+                                <AssociateGenre />
                             </Popup>
                         </tbody>                    
                     </table>
