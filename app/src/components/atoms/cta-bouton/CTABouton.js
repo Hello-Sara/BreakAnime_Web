@@ -1,5 +1,5 @@
 import React from 'react';
-import './Bouton.css';
+import './CTABouton.css';
 
 const Bouton = ({ name, Submit }) => {
     return (
