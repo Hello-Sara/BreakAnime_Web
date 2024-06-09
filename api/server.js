@@ -7,11 +7,16 @@ const genreRoutes = require('./route/genreRoutes');
 const userRoutes = require('./route/userRoutes');
 const seasonRoutes = require('./route/seasonRoutes');
 const adminRoutes = require('./route/adminRoutes');
+const quizzRoutes = require('./route/quizzRoutes');
 const Anime = require('./models/animeModel');
 const Genre = require('./models/genreModel');
 const Season = require('./models/seasonModel');
 const Synonyms = require('./models/synonymsModel');
 const AnimeGenre = require('./models/AnimeGenre');
+const Question = require('./models/questionModel');
+const Answer = require('./models/answerModel');
+const Recommendation = require('./models/recommendationModel');
+const AnswerGenre = require('./models/answerGenreModel'); 
 
 cors = require('cors');
 require('dotenv').config();
@@ -40,7 +45,11 @@ sequelize.authenticate()
     Synonyms: Synonyms,
     Genre: Genre,
     AnimeGenre: AnimeGenre,
-    Season: Season
+    Season: Season, 
+    Question: Question,
+    Answer: Answer,
+    Recommendation: Recommendation,
+    AnswerGenre: AnswerGenre
   };
   
   Object.values(models)
@@ -76,6 +85,7 @@ app.use('/api/resource', userRoutes);
 app.use('/api', genreRoutes);
 app.use('/api', seasonRoutes);
 app.use('/api', adminRoutes);
+app.use('/api', quizzRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

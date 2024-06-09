@@ -1,14 +1,14 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const AnimeGenre = sequelize.define('anime_genre', {
+const Recommendation = sequelize.define('recommendation', {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
   anime_id: {type: DataTypes.INTEGER, references: {model: 'anime', key: 'id'}},
   genre_id: {type: DataTypes.INTEGER, references: {model: 'genre', key: 'id'}}
 }, 
 {
-  tableName: 'anime_genre',
+  tableName: 'recommendation',
   timestamps: false,
 });
 
-module.exports = AnimeGenre;
+module.exports = Recommendation;
