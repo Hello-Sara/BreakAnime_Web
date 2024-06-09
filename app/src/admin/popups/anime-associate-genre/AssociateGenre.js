@@ -11,11 +11,7 @@ function AssociateGenre() {
       if (searchTerm) {
         try {
           // Remplacez `URL_API` par l'URL de votre API et ajustez le chemin si nécessaire
-          const response = await axios.get("https://api.breakanime.ninja/api/genre/name", {
-            body: {
-              name: searchTerm,
-            },
-          });  
+          const response = await axios.get("https://api.breakanime.ninja/api/genre/name/"+ searchTerm);  
           setGenres(response.data);
         } catch (error) {
           console.error('Erreur lors de la récupération des genres', error);
