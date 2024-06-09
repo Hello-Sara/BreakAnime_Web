@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AdminMenu from '../../../components/molecules/admin-menu/AdminMenu';
 import Popup from '../../../components/molecules/pop-up/Popup';
 import Actions from '../../popups/actions/Actions';
+import { AlertContext } from '../../../providers/Alert/AlertProvider';
 
 const AdminUser = () => {
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
+    const { showAlert } = useContext(AlertContext);
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
@@ -63,11 +65,21 @@ const AdminUser = () => {
         // Logique pour éditer un utilisateur
     };
 
-    const deleteUser = (userId) => {
-        // Logique pour supprimer un utilisateur
+    const deleteUser = (user) => {
+        axios.delete(`https://api.breakanime.ninja/api/resource/user/${user.id}`, {
+            headers: {
+                Authorization: `${localStorage.getItem('token')}`
+            }
+        }).then((response) => {
+            fetchUsers().then(() => {
+                showAlert('User deleted', 'success', 3000);
+            });
+        }).catch((error) => {
+            showAlert('Error happened trying to delete user ' + error, 'danger', 3000);
+        });
     };
 
-    const grantAdminAccess = (user) => {
+    const grantAdminAccess =  (user) => {
         axios.put(`https://api.breakanime.ninja/api/resource/user/${user.id}`, {
             role: 1
         }, {
@@ -75,7 +87,10 @@ const AdminUser = () => {
                 Authorization: `${localStorage.getItem('token')}`
             }
         }).then((response) => {
-            console.log(response.data);
+            setIsPopupOpen(false);
+            fetchUsers().then(() => {
+                showAlert('Admin access granted', 'success', 3000);
+            });
         }).catch((error) => {
             console.error(error);
         });
@@ -89,7 +104,10 @@ const AdminUser = () => {
                 Authorization: `${localStorage.getItem('token')}`
             }
         }).then((response) => {
-            console.log(response.data);
+            setIsPopupOpen(false);
+            fetchUsers().then(() => {
+                showAlert('User retrograted', 'success', 3000);
+            });
         }).catch((error) => {
             console.error(error);
         });
