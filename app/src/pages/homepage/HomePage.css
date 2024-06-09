@@ -6,6 +6,49 @@ p {
   margin: 0%;
 }
 
+.rezero {
+  position: absolute;
+  top: 4vh;
+  left: 8vw;
+  width: 12vw;
+}
+
+.demon_slayer {
+  position: absolute;
+  top: 35vh;
+  left: 4vw;
+  width: 25vw;
+}
+
+.spyx {
+  position: absolute;
+  top: 10vh;
+  left: 75vw;
+  width: 12vw;
+}
+
+.x {
+  position: absolute;
+  top: 40vh;
+  left: 70vw;
+  width: 12vw;
+}
+
+.myhero {
+  position: absolute;
+  top: 60vh;
+  left: 80vw;
+  width: 12vw;
+}
+
+.bubble-container{
+  z-index: 99999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 h2 {
   color: white;
   font-size: 64px; /* Ajustez en fonction de vos besoins */
