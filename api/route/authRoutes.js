@@ -6,10 +6,6 @@ const router = express.Router();
 
 router.post('/login', authController.login);
 router.post('/register', authController.register);
-
-// Exemple de route protégée
-router.get('/protected', authMiddleware.authenticateToken, (req, res) => {
-  res.json({ message: 'Protected route', user: req.user });
-});
+router.post('/admin/login', authController.adminLogin);
 
 module.exports = router;

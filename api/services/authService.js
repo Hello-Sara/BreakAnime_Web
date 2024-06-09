@@ -24,7 +24,29 @@ const login = async (email, username, password) => {
     throw new Error('Invalid password');
   }
 
-  const token = jwt.sign({ userId: user.id }, config.secret, { expiresIn: '1h' });
+  const token = jwt.sign({ userId: user.id }, config.secret);
+
+  return token;
+};
+
+const loginAsAdmin = async (email, password) => {
+  const admin = await User.findOne({ 
+    where: { 
+      email: email,
+      role: 1
+    } 
+  });
+  if (!admin) {
+    throw new Error("NotFound", 'Admin not found');
+  }
+
+  const validPassword = await bcrypt.compare(password, admin.password);
+
+  if (!validPassword) {
+    throw new Error('InvalidPassword', 'Invalid password');
+  }
+
+  const token = jwt.sign({ userId: admin.id }, config.secret, { expiresIn: '1h' });
 
   return token;
 };
@@ -57,5 +79,6 @@ const register = async (name, email, username, password) => {
 
   module.exports = {
     login,
-    register
+    register, 
+    loginAsAdmin
   };
