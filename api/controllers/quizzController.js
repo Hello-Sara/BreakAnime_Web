@@ -24,6 +24,19 @@ exports.getQuestionWithAnswers = async (req, res) => {
   }
 };
 
+exports.getGenresForAnswer = async (req, res) => {
+  try {
+    const answerId = req.params.id;
+    const answerWithGenres = await quizzService.getGenresForAnswer(answerId);
+    if (!answerWithGenres) {
+      return res.status(404).json({ message: 'Réponse non trouvée' });
+    }
+    res.status(200).json(answerWithGenres);
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur lors de la récupération des genres', error: error.message });
+  }
+};
+
 exports.createQuestion = async (req, res) => {
   try {
     const question = await quizzService.createQuestion(req.body);
@@ -39,6 +52,16 @@ exports.createAnswerForQuestion = async (req, res) => {
     res.status(201).json(newAnswer);
   } catch (error) {
     res.status(500).json({ message: 'Erreur lors de la création de la réponse', error: error.message });
+  }
+};
+
+exports.addGenresToAnswer = async (req, res) => {
+  try {
+    const { answerId, genreNames, is_reversed } = req.body;
+    await quizzService.addGenresToAnswer(answerId, genreNames, is_reversed);
+    res.status(200).json({ message: 'Genres ajoutés avec succès à la question' });
+  } catch (error) {
+      res.status(500).json({ message: 'Erreur lors de l\'ajout des genres à la réponse', error: error.message });
   }
 };
 
