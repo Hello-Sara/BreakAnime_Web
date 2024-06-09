@@ -1,6 +1,7 @@
 const Anime = require('../models/animeModel');
 const Synonyms = require('../models/synonymsModel');
 const Genre = require('../models/genreModel');
+const AnimeGenre = require('../models/AnimeGenre');
 const AnimeSeason = require('../models/seasonModel');
 const SeasonService = require('./seasonService');
 const { Op } = require('sequelize');
@@ -130,6 +131,23 @@ class AnimeService {
             throw error;
         }
     }
+
+    // Afficher tous les animes d'un genre spécifique
+    static async getAnimesByGenreName(genreName) {
+        try {
+          const animes = await Anime.findAll({
+            include: [{
+              model: Genre,
+              where: { name: genreName },
+              through: AnimeGenre
+            }]
+          });
+          return animes;
+        } catch (error) {
+          console.log(error);
+          throw error;
+        }
+      }
 
     // Créer un nouvel anime avec ses synonymes
     static async createAnime(data) {
