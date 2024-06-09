@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'Montserrat Bold';
+    src: url('../../../assets/fonts/Montserrat-Bold.ttf') format('truetype');
+    font-weight: 700; /* Bold */
+    font-style: normal;
+}
+
+/* Buttons */
+.call-to-action-button {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 28px;
+    gap: 12px;
+    height: 50px;
+    cursor: pointer;
+  
+    /* Coleur principal */
+    background: #FEC200;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+  
+    /* Box sizing */
+    box-sizing: border-box;
+
+    /* CSS pour le texte */
+    color: #0B0B0B; /* Couleur du texte */
+    font-size: 18px; /* Taille de la police */
+    font-family: 'Montserrat Bold', sans-serif; /* Police */
+  }

@@ -1,0 +1,77 @@
+p {
+  color: white;
+  font-size: 25px;
+  font-family: 'Montserrat Regular';
+  text-align: center;
+  margin: 0%;
+}
+
+h2 {
+  color: white;
+  font-size: 64px; /* Ajustez en fonction de vos besoins */
+  font-family: 'Montserrat Bold';
+  text-align: center;
+  margin: 0%;
+  margin-bottom: 2vh;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start; */
+  /* align-items: center; */
+}
+
+.title {
+  color: #FEC200;
+  font-size: 115px;
+  font-family: 'nuku';
+  text-align: center;
+  margin: 0;
+  letter-spacing: 5px;
+  margin-top: 10%;
+}
+
+
+.container {
+  justify-content: flex-start; 
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8vh; /* Ajustez en fonction de vos besoins */
+  margin-bottom: 10vh;
+}
+
+.scroll-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.scroll-text {
+  color: #808080;
+  font-size: 16px;
+  font-family: 'Montserrat Medium';
+  margin-bottom: 2vh;
+} 
+
+.arrow-down {
+  color: #808080;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-between; /* Ajoutez un espace entre les cartes */
+  flex-wrap: wrap; /* Permet aux cartes de passer à la ligne suivante si l'espace est insuffisant */
+  padding: 0 4vw 0 4vw;
+  margin-top: 10vh;
+}
+
+.universe-container {
+  margin-top: 15vh;
+  margin-bottom: 15vh;  
+}

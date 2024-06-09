@@ -1,0 +1,24 @@
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px; /* Ajoute un padding de 16px à droite et à gauche */
+    width: 241px;
+    height: 49px;
+    box-sizing: border-box;
+    border: 1px solid #F2A007;
+    border-radius: 30px;
+    opacity: 0.75;
+}
+
+.search-input {
+    color: #FFFFFF; /* Couleur du texte */
+    background-color: transparent; /* Couleur de fond de la zone de texte */
+    font-family: 'Montserrat Medium', sans-serif;
+    font-size: 12px;
+    border: none; /* Supprime la bordure par défaut de l'input */
+}
+
+.search-icon {
+    margin-right: 50px; /* Ajoute une marge de 16px à droite */
+}

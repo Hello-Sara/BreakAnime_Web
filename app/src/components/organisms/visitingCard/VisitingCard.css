@@ -1,0 +1,85 @@
+.card-img {
+  max-width: 35%;
+  object-fit: contain;
+  width: auto;
+  max-height: 130px;
+}
+.visiting-card-container {
+  max-width: 700px;
+  width: 100%;
+  background-color: var(--light-blue);
+  border: solid 5px var(--dark-blue);
+  border-radius: 15px;
+  padding: 20px;
+  z-index: 2;
+}
+.visiting-card-container * {
+  line-height: 1.4;
+}
+.card-top,
+.card-bottom {
+  display: flex;
+  gap: 20px;
+}
+.card-bottom {
+  justify-content: flex-end;
+}
+.card-top > div,
+.card-bottom > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.visiting-card-container svg {
+  --color: var(--sky-blue) !important;
+
+  width: 20px;
+  height: 20px;
+}
+.card-mid {
+  margin: 20px 0 5px;
+}
+.card-mid-content {
+  display: flex;
+  gap: 15px;
+}
+.card-name span {
+  font-weight: 700;
+  font-size: 2.2rem;
+}
+.card-position {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.card-slogan {
+  color: var(--sky-blue);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.card-bottom * {
+  text-align: right;
+}
+.card-company {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+@media (max-width: 576px) {
+  .visiting-card-container {
+    padding: 10px;
+  }
+  .visiting-card-container * {
+    font-size: 0.8rem;
+  }
+  .card-top,
+  .card-bottom,
+  .card-mid-content {
+    gap: 5px;
+  }
+  .card-name span {
+    font-size: 1.1rem;
+  }
+  .card-img {
+    max-height: 70px;
+  }
+}

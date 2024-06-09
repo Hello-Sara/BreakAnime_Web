@@ -1,0 +1,78 @@
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 100px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; /* Aligne verticalement les éléments à l'intérieur */
+    gap: 32px; /* Ajoute un espace de 32px entre les éléments */
+}
+
+.connect-link {
+    color: #FEC200;
+    font-family: 'Montserrat SemiBold', sans-serif;
+    font-size: 18px;
+    text-decoration: none; /* Supprime le soulignement du lien */
+}
+
+.inscrire-link {
+    text-decoration: none; /* Supprime le soulignement du lien */
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne suivante si nécessaire */
+}
+
+.nav-links a {
+    color: white;
+    font-family: 'Montserrat SemiBold', sans-serif;
+    text-decoration: none;
+    margin-right: 32px;
+}
+
+/* Styles pour les écrans de moins de 600px de large */
+@media (max-width: 600px) {
+    .nav-links a {
+        font-size: 14px; /* Réduit la taille de la police */
+        margin-right: 16px; /* Réduit la marge à droite */
+    }
+}
+
+.burger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+}
+
+.burger div {
+    width: 2rem;
+    height: 0.25rem;
+    background: #333; /* Couleur des barres du menu burger */
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+}
+
+@media (max-width: 600px) {
+    .nav-links {
+        display: none;
+    }
+
+    .burger {
+        display: flex;
+    }
+}
