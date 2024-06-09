@@ -11,6 +11,22 @@ const login = async (req, res) => {
   }
 };
 
+const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const token = await authService.loginAsAdmin(email, password);
+    res.json({ token });
+  } catch (err) {
+    if(err.name === 'NotFound') {
+      return res.status(404).json({ error: err.message });
+    } else if(err.name === 'InvalidPassword') {
+      return res.status(401).json({ error: err.message });
+    } else {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+};
+
 const register = async (req, res) => {
   const user = req.body;
   console.log(user);
@@ -24,5 +40,6 @@ const register = async (req, res) => {
 
 module.exports = {
   login,
-  register
+  register,
+  adminLogin
 };
