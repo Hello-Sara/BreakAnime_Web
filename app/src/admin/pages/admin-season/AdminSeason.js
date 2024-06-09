@@ -22,11 +22,6 @@ const AdminSeason = () => {
         if(!isConnected) {
             navigate('/admin');
         } else {
-            isTokenExpired().then((response) => {
-                if (response) {
-                    navigate('/admin');
-                }    
-            });
             document.body.classList.add('admin-home');
             fetchSeasons();
             return () => {
@@ -37,7 +32,7 @@ const AdminSeason = () => {
 
     const fetchSeasons = async () => {
         try {
-            const response = await axios.get('https://api.breakanime.ninja/api/auth/verifyToken', {
+            const response = await axios.get('https://api.breakanime.ninja/api/seasons/', {
                 headers: {
                     Authorization: `${localStorage.getItem('token')}`
                 }
@@ -52,7 +47,7 @@ const AdminSeason = () => {
 
     const isTokenExpired = async () => {
         try {
-            const response = await axios.get('https://api.breakanime.ninja/api/auth/verify-token', {
+            const response = await axios.get('https://api.breakanime.ninja/api/auth/verifyToken', {
                 headers: {
                     Authorization: `${localStorage.getItem('token')}`
                 }
@@ -62,7 +57,6 @@ const AdminSeason = () => {
             console.error(error);
         }
     };
-
     const handleEdit = (genreId) => {
         // Handle edit action for the anime with the given ID
         console.log('Edit genre:', genreId);
