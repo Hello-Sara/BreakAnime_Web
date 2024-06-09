@@ -19,7 +19,7 @@ const AdminAnime = () => {
     const [isLoading, setIsLoading] = useState(true);
     
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(6);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
     const [pageMaxOffset, setPageMaxOffset] = useState(10);  // Nombre de pages à afficher autour de la page courante [currentPage
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -35,7 +35,6 @@ const AdminAnime = () => {
     const [openDetails, setOpenDetails] = useState(false);
 
     const { showAlert } = useContext(AlertContext);
-
     
 
     useEffect(() => {
@@ -197,7 +196,32 @@ const AdminAnime = () => {
                                             onDelete={handleDelete}
                                             onDetails={handleShowDetails}
                                             item={selectedAnime}
-                                            itemSpecificButton={{ name: 'Associate Genre', action: handleAssociateGenre }}
+                                            itemSpecificButtons={[
+                                                { 
+                                                    name: 'Show details',
+                                                    action: handleShowDetails,
+                                                    style: { margin: '10px', padding: '6px 6px 6px 6px', "backgroundColor": '#fff', 'border': '2px solid #FEC200', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'},
+                                                    onHoverStyle:{ margin: '10px', padding: '6px 6px 6px 6px', 'color': '#fff', "backgroundColor": '#FEC200', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}                                                
+                                                },
+                                                { 
+                                                    name: 'Edit',
+                                                    action: handleEdit,
+                                                    style: { margin: '10px', padding: '6px 6px 6px 6px', "backgroundColor": '#fff', 'border': '2px solid #494946', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'},
+                                                    onHoverStyle:{ margin: '10px', padding: '6px 6px 6px 6px', 'color': '#fff', "backgroundColor": '#494946', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}                                                
+                                                },
+                                                {
+                                                    name: 'Associate Genre',
+                                                    action: handleAssociateGenre,
+                                                    style: { margin: '10px', padding: '6px 6px 6px 6px', "backgroundColor": '#fff', 'border': '2px solid #494946', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'},
+                                                    onHoverStyle:{ margin: '10px', padding: '6px 6px 6px 6px', 'color': '#fff', "backgroundColor": '#494946', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}
+                                                },
+                                                {
+                                                    name: 'Delete',
+                                                    action: handleDelete,
+                                                    style: { margin: '10px', padding: '6px 6px 6px 6px', "backgroundColor": '#fff', 'border': '2px solid #F25252', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'},
+                                                    onHoverStyle:{ margin: '10px', padding: '6px 6px 6px 6px', 'color': '#fff', "backgroundColor": '#F25252', 'border': '2px solid transparent', 'borderRadius': '5px', 'backdropFilter': 'blur(40px)', cursor: 'pointer'}                                                                                                    
+                                                }                                                                                              
+                                            ]}
                                         />                                        
                                     </Popup>
                                 </tr>
