@@ -9,6 +9,7 @@ class SeasonService {
         });
         return seasons.map(animeSeason => this.mapSeason(animeSeason));
     }
+    
     async getSeasonById(id) {
         return await Season.findByPk(id);
     }

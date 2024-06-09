@@ -2,13 +2,14 @@ const Anime = require('../models/animeModel');
 const Synonyms = require('../models/synonymsModel');
 const Genre = require('../models/genreModel');
 const AnimeSeason = require('../models/seasonModel');
-const seasonService = require('./seasonService');
+const SeasonService = require('./seasonService');
 const { Op } = require('sequelize');
 
 class AnimeService {
     
     // Afficher tous les animes avec leurs synonymes
     static async getAllAnimes() {
+        const seasonService = new SeasonService();
         try {
             let animes = await Anime.findAll({
                 attributes: { exclude: ['season_id'] }, // Exclure season_id de la réponse
@@ -46,6 +47,7 @@ class AnimeService {
 
     // Afficher un anime spécifique par son ID avec ses synonymes
     static async getAnimeById(id) {
+        const seasonService = new SeasonService();
         try {
             let anime = await Anime.findByPk(id, {
                 attributes: { exclude: ['season_id'] }, // Exclure season_id de la réponse
@@ -88,6 +90,7 @@ class AnimeService {
 
     // Rechercher un anime par titre ou synonyme
     static async searchAnimeByTitleOrSynonym(term) {
+        const seasonService = new SeasonService();
         try {
             const animes = await Anime.findAll({
                 where: {
