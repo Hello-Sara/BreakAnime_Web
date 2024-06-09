@@ -1,14 +1,17 @@
-const Genre = require('../models/AnimeGenre');
-const Season = require('../models/Season');
-const User = require('../models/User');
+const Genre = require('../models/genreModel');
+const Anime = require('../models/animeModel');
+const Season = require('../models/seasonModel');
+const User = require('../models/userModel');
 
 const getAdminStats = async (req, res) => {
     try {
+        const animeCount = await Anime.count();
         const genreCount = await Genre.count();
         const seasonCount = await Season.count();
         const userCount = await User.count();
 
         res.json({
+            animes: animeCount,
             genres: genreCount,
             seasons: seasonCount,
             users: userCount
