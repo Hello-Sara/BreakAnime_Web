@@ -17,9 +17,9 @@ const adminLogin = async (req, res) => {
     const token = await authService.loginAsAdmin(email, password);
     res.json({ token });
   } catch (err) {
-    if(err.name === 'NotFound') {
+    if(err.name === 'UserNotFoundError') {
       return res.status(404).json({ error: err.message });
-    } else if(err.name === 'InvalidPassword') {
+    } else if(err.name === 'InvalidPasswordError') {
       return res.status(401).json({ error: err.message });
     } else {
       return res.status(500).json({ error: err.message });
