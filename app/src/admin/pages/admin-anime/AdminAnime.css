@@ -1,0 +1,25 @@
+#page-numbers {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin: 20px 0;
+    padding: 0;
+}
+
+#page-numbers li {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+#page-numbers li:hover {
+    background-color: #f2f2f2;
+}
+
+#loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
