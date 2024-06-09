@@ -10,6 +10,11 @@
     margin-top: 5vh;
 }
 
+.logo {
+    width: 190px;
+    height: auto;
+}
+
 .sidebar {
     width: 250px;
     background-color: #0B0B0B;
