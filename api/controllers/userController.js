@@ -20,11 +20,13 @@ exports.getOneById = async (id, res) => {
     if(!user) {
         return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
-    if(body.password.length < 6 || body.password.length > 16) {
-        return res.status(400).json({ error: 'Password must be between 6 and 16 characters' });
+    if(body.password) {
+        if(body.password.length < 6 || body.password.length > 16) {
+            return res.status(400).json({ error: 'Password must be between 6 and 16 characters' });
+        }
     }
-    const updatedUser = await user.update(body);
-    return updatedUser;
+    
+    return await user.update(body);
 }
 
 // Méthode pour supprimer un utilisateur
