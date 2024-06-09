@@ -8,6 +8,7 @@ const AnimeEdition = ({ anime, onStatusChange, onDescriptionChange, onTitleChang
     
 
     useEffect(() => {
+        console.log(anime);
         axios.get('https://api.breakanime.ninja/api/seasons/', {
             headers: {
                 Authorization: `${localStorage.getItem('token')}`
@@ -15,14 +16,29 @@ const AnimeEdition = ({ anime, onStatusChange, onDescriptionChange, onTitleChang
         }).then(data =>  {setSeasons(data.data);  console.log(data)})
     }, []);
 
+    const mapStatus = (status) => {
+        switch(status) {
+            case 'FINI':
+                return 0;
+            case 'EN COURS':
+                return 1;
+            case 'PAS ENCORE DIFFUSÉ':
+                return 2;
+            default:
+                return 'Status inconnu';
+        }
+    };
+
     return (
         <div className='edit-container'>
             <h1>Anime Edition</h1>
             <label>Status</label>
+            <p>{anime.status.id}</p>
             <br />
-            <select value={anime.status} onChange={onStatusChange}>
-                <option value='0'>Finished</option>
-                <option value='1'>Ongoing</option>
+            <select value={mapStatus(anime.status)} onChange={onStatusChange}>
+                <option value="0">FINI</option>
+                <option value="1">EN COURS</option>
+                <option value="2">PAS ENCORE DIFFUSÉ</option>      
             </select>
             <br />
             <label>Description</label>

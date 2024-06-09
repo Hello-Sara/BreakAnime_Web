@@ -11,6 +11,7 @@ import Actions from '../../popups/actions/Actions';
 import { AlertContext } from '../../../providers/Alert/AlertProvider';
 import AnimeEdition from '../../popups/anime-edition/AnimeEdition';
 import AssociateGenre from '../../popups/anime-associate-genre/AssociateGenre';
+import AddAnime from '../../popups/add-anime/AddAnime';
 
 
 const AdminAnime = () => {
@@ -37,6 +38,7 @@ const AdminAnime = () => {
     const [openDetails, setOpenDetails] = useState(false);
     const [openEdition, setOpenEdition] = useState(false);
     const [openAssociation, setOpenAssociation] = useState(false);
+    const [OpenAddAnime, setOpenAddAnime] = useState(false);
 
     const { showAlert } = useContext(AlertContext);
     
@@ -142,9 +144,12 @@ const AdminAnime = () => {
                 Authorization: `${localStorage.getItem('token')}`
             }
         }).then(() => {
-            showAlert("Anime supprimé avec succès", "info", 3000);
             setIsPopupOpen(false);
-            fetchAnimes();
+            setIsLoading(true);
+            fetchAnimes().then(() => {                
+                setIsLoading(false);
+                showAlert("Anime supprimé avec succès", "info", 3000);                
+            });
         }).catch((error) => {
             console.error(error);
         });
@@ -158,6 +163,10 @@ const AdminAnime = () => {
 
     const handlePageChange = (event) => {
         setCurrentPage(Number(event.target.id));
+    };
+
+    const handleAddAnime = () => {
+        setOpenAddAnime(true);
     };
 
     const pageNumbers = [];
@@ -178,6 +187,9 @@ const AdminAnime = () => {
                 ) : 
                 (
                     <>
+                    <button onClick={handleAddAnime}>
+                        Add Anime
+                    </button>
                     <SearchBar animes={animes} setFilteredAnimes={setFilteredAnimes} />
                     <table>
                         <thead>
@@ -300,6 +312,33 @@ const AdminAnime = () => {
                                         });
                                         setOpenAssociation(false);
                                         setIsLoading(true); 
+                                    }}
+                                />
+                            </Popup>
+                            <Popup isOpen={OpenAddAnime} centered={true} onClose={() => setOpenAddAnime(false)} size='xxl'>
+                                <AddAnime
+                                    onAdd={(anime) => {
+                                        axios.post('https://api.breakanime.ninja/api/animes/', {
+                                            titre: anime.titre,
+                                            status: anime.status,
+                                            episodes: anime.episodes,
+                                            type: anime.type,
+                                            seasonId: anime.season,
+                                            synonyms: anime.synonyms,
+                                            description: anime.description,
+                                            picture: anime.picture
+                                        }, {
+                                            headers: {
+                                                Authorization: `${localStorage.getItem('token')}`
+                                            }
+                                        }).then(() => {
+                                            setIsLoading(true);
+                                            fetchAnimes().then(() => {
+                                                showAlert("Anime ajouté avec succès", "info", 3000);
+                                                setIsLoading(false)
+                                            });
+                                        });
+                                        setOpenAddAnime(false);
                                     }}
                                 />
                             </Popup>

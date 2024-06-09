@@ -6,7 +6,7 @@ const AnimeDetails = ({ anime }) => {
         <div style={{maxHeight: '85vh', overflow: 'auto'}}>
             <div style={{display: 'flex', gap: '20px'}}>
                 <div style={{padding: '0px 50px'}}>
-                    <img src={anime.picture} alt={anime.titre} />
+                    <img src={anime.picture} alt={anime.titre}  width="200"/>
                 </div>
                 <div>
                     <h1>{anime.titre}</h1>
