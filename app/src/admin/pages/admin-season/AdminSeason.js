@@ -4,6 +4,8 @@ import './AdminSeason.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../../assets/loaders/search.gif';
+import Popup from '../../../components/molecules/pop-up/Popup';
+import AddSeason from '../../popups/add-season/AddSeason';
 
 const AdminSeason = () => {
     const [seasons, setSeasons] = useState([]);
@@ -11,6 +13,8 @@ const AdminSeason = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(15);
+
+    const [isAddSeasonOpen, setIsAddSeasonOpen] = useState(false);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -57,14 +61,21 @@ const AdminSeason = () => {
             console.error(error);
         }
     };
-    const handleEdit = (genreId) => {
-        // Handle edit action for the anime with the given ID
-        console.log('Edit genre:', genreId);
+
+    const handleAddSeason = () => {
+        setIsAddSeasonOpen(true);
     };
 
     const handleDelete = (genreId) => {
-        // Handle delete action for the anime with the given ID
-        console.log('Delete genre:', genreId);
+        axios.delete(`https://api.breakanime.ninja/api/seasons/${genreId}`, {
+            headers: {
+                Authorization: `${localStorage.getItem('token')}`
+            }
+        }).then(() => {
+            fetchSeasons();
+        }).catch((error) => {
+            console.error(error);
+        });
     };
 
     const handlePageChange = (event) => {
@@ -89,6 +100,7 @@ const AdminSeason = () => {
                 ) : 
                 (
                     <>
+                    <button className='add-season-btn' onClick={handleAddSeason}>Add season</button>
                     <table>
                         <thead>
                             <tr>
@@ -103,9 +115,24 @@ const AdminSeason = () => {
                                     <td>{genre.year}</td>
                                     <td>{genre.season}</td>
                                     <td>
-                                        <button onClick={() => handleEdit(genre.id)}>Edit</button>
                                         <button onClick={() => handleDelete(genre.id)}>Delete</button>
                                     </td>
+                                    <Popup isOpen={isAddSeasonOpen} centered={true} size='xxl' onClose={() => setIsAddSeasonOpen(false)}>
+                                        <AddSeason
+                                            onSave={(animeSeason) => {
+                                                axios.post('https://api.breakanime.ninja/api/seasons/', animeSeason, {
+                                                    headers: {
+                                                        Authorization: `${localStorage.getItem('token')}`
+                                                    }
+                                                }).then(() => {
+                                                    setIsAddSeasonOpen(false);
+                                                    fetchSeasons();
+                                                }).catch((error) => {
+                                                    console.error(error);
+                                                });
+                                            }} 
+                                        />
+                                    </Popup>
                                 </tr>
                             ))}
                         </tbody>                    
