@@ -12,7 +12,7 @@ const login = async (req, res) => {
 };
 
 
-const verifyToken = async (req, res, next) => {
+const verifyToken = async (req, res) => {
   const token = req.headers.authorization;
   if (!token) {
     return res.status(401).json({ error: 'No token provided' });
@@ -20,7 +20,7 @@ const verifyToken = async (req, res, next) => {
   try {
     const decodedToken = await authService.isTokenExpired(token);
     req.user = decodedToken;
-    next();
+    return res.status(200).json({ message: 'Token is valid' });
   } catch (err) {
     return res.status(401).json({ error: 'Invalid token' });
   }
