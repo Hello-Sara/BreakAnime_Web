@@ -27,8 +27,31 @@ exports.createQuestion = async (quizzData) => {
     return result;
 };
 
+exports.createAnswerForQuestion = async (questionId, answerData) => {
+  console.log(questionId);
+  const question = await Question.findByPk(questionId);
+  if (!question) {
+    throw new Error('Question non trouvée');
+  }
+  return await Answer.create({ ...answerData, question_id: questionId });
+};
+
 exports.updateQuestion = async (id, questionData) => {
-  return await Question.update(questionData, { where: { id: id } });
+  const question = await Question.findByPk(id);
+  if (!question) {
+    return null;
+  }
+  await question.update(questionData);
+  return question;
+};
+
+exports.updateAnswer = async (id, answerData) => {
+  const answer = await Answer.findByPk(id);
+  if (!answer) {
+    return null;
+  }
+  await answer.update(answerData);
+  return answer;
 };
 
 exports.deleteQuestion = async (id) => {

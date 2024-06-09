@@ -79,7 +79,7 @@ const AdminUser = () => {
         });
     };
 
-    const grantAdminAccess = (user) => {
+    const grantAdminAccess =  (user) => {
         axios.put(`https://api.breakanime.ninja/api/resource/user/${user.id}`, {
             role: 1
         }, {
@@ -87,7 +87,10 @@ const AdminUser = () => {
                 Authorization: `${localStorage.getItem('token')}`
             }
         }).then((response) => {
-            console.log(response.data);
+            setIsPopupOpen(false);
+            fetchUsers().then(() => {
+                showAlert('Admin access granted', 'success', 3000);
+            });
         }).catch((error) => {
             console.error(error);
         });
@@ -101,7 +104,10 @@ const AdminUser = () => {
                 Authorization: `${localStorage.getItem('token')}`
             }
         }).then((response) => {
-            console.log(response.data);
+            setIsPopupOpen(false);
+            fetchUsers().then(() => {
+                showAlert('User retrograted', 'success', 3000);
+            });
         }).catch((error) => {
             console.error(error);
         });

@@ -19,7 +19,8 @@ Answer.associate = function(models) {
     });
 
     Answer.belongsTo(models.Question, {
-        foreignKey: 'question_id'
+        foreignKey: 'question_id',
+        onDelete: 'CASCADE'
     });
 }
 
