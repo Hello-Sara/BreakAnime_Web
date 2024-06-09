@@ -4,6 +4,8 @@ import './AdminGenre.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../../assets/loaders/search.gif';
+import Popup from '../../../components/molecules/pop-up/Popup';
+import AddGenre from '../../popups/add-genre/AddGenre';
 
 const AdminGenre = () => {
     const [genres, setGenres] = useState([]);
@@ -11,6 +13,9 @@ const AdminGenre = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(15);
+    const [isAddGenreOpen, setIsAddGenreOpen] = useState(false);
+    const [openPopupId, setOpenPopupId] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -28,7 +33,7 @@ const AdminGenre = () => {
                 }    
             });
             document.body.classList.add('admin-home');
-            fetchAnimes();
+            fetchGenres();
             return () => {
               document.body.classList.remove('admin-home');
             };
@@ -48,7 +53,7 @@ const AdminGenre = () => {
         }
     };
 
-    const fetchAnimes = async () => {
+    const fetchGenres = async () => {
         try {
             const response = await axios.get('https://api.breakanime.ninja/api/genre/', {
                 headers: {
@@ -63,6 +68,7 @@ const AdminGenre = () => {
     };
 
     const handleEdit = (genreId) => {
+        setOpenPopupId(genreId); 
         // Handle edit action for the anime with the given ID
         console.log('Edit genre:', genreId);
     };
@@ -94,6 +100,13 @@ const AdminGenre = () => {
                 ) : 
                 (
                     <>
+                    <input
+                        type="text"
+                        placeholder="Search genres..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button className='add-genre' onClick={() => setIsAddGenreOpen(true)}>Add Genre</button>
                     <table>
                         <thead>
                             <tr>
@@ -103,7 +116,13 @@ const AdminGenre = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentItems.map((genre) => (
+                            {currentItems
+                             .filter((genre) => {
+                                const name = genre.name?.toLowerCase() || "";
+                                const description = genre.description?.toLowerCase() || "";
+                                return name.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase());
+                              })    
+                            .map((genre) => (
                                 <tr key={genre.id}>
                                     <td>{genre.name}</td>
                                     <td>{genre.description}</td>
@@ -111,6 +130,24 @@ const AdminGenre = () => {
                                         <button onClick={() => handleEdit(genre.id)}>Edit</button>
                                         <button onClick={() => handleDelete(genre.id)}>Delete</button>
                                     </td>
+                                    <Popup isOpen={isAddGenreOpen} centered={true} size='xxl' onClose={() => setIsAddGenreOpen(false)}>
+                                        <AddGenre
+                                            onSave={(genre) => {
+                                                console.log(genre);
+                                                axios.post('https://api.breakanime.ninja/api/genre/', genre, {
+                                                    headers: {
+                                                        Authorization: `${localStorage.getItem('token')}`
+                                                    }
+                                                }).then(() => {
+                                                    setIsAddGenreOpen(false);
+                                                    fetchGenres();
+                                                }).catch((error) => {
+                                                    console.error(error);
+                                                });
+                                                setIsAddGenreOpen(false);
+                                            }}
+                                        />                                                                                                                                                                                                                         
+                                    </Popup>
                                 </tr>
                             ))}
                         </tbody>                    
