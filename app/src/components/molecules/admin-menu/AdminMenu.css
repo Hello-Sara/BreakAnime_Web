@@ -1,0 +1,51 @@
+.sidebar-nav {
+    padding-top: 30px;
+    margin: 0 30px;
+}   
+
+.logo-item {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+}
+
+.logo {
+    width: 190px;
+    height: auto;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #0B0B0B;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-item {
+    margin-bottom: 1vh;
+    padding-left: 20px;
+    padding-right: 40px;
+    font-size: 0.8em;
+}
+
+.sidebar-action {
+    margin-top: 4vh;
+}
+
+.sidebar-link {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    font-family: 'montserrat', sans-serif;
+    border-bottom: 1px solid #fff; /* Changez #000 à la couleur de votre choix */
+    padding: 10px 0; /* Ajoute un espace au-dessus et en dessous de chaque lien */
+}

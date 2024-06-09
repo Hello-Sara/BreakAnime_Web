@@ -4,6 +4,7 @@ import '../stylesheets/Main.css';
 import HomePage from '../pages/homepage/HomePage';
 import AdminLogin from '../admin/pages/login/AdminLogin';
 import AdminHome from '../admin/pages/dashboard/AdminHome';
+import AdminUser from '../admin/pages/admin-user/AdminUser';
 
 import TagManager from 'react-gtm-module';
 
@@ -23,8 +24,7 @@ function App() {
             <Route path='/' element={<HomePage/>} />
             <Route path='/admin' element={<AdminLogin />} />
             <Route path='/admin/dashboard' element={<AdminHome />} />
-            {/* <Route path='/tarifs' element={<Tarifs />} /> */}
-            {/* <Route path='/tarifs' element={<Tarifs />} /> */}
+            <Route path='/admin/users' element={<AdminUser />} />        
           </Routes>
           {/* <Footer /> */}
         </Router>
