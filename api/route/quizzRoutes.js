@@ -11,7 +11,7 @@ router.get('/mcq/:id/genres', quizzController.getGenresForAnswer);
 router.post('/mcq', authenticateToken, isAdmin, quizzController.createQuestion);
 router.post('/mcq/:id/answers', authenticateToken, isAdmin, quizzController.createAnswerForQuestion);
 
-router.post('/answer/addGenres', quizzController.addGenresToAnswer);
+router.post('/answer/addGenres', authenticateToken, isAdmin, quizzController.addGenresToAnswer);
 
 router.put('/mcq/:id', authenticateToken, isAdmin, quizzController.updateQuestion);
 router.put('/mcq/:id/answers', authenticateToken, isAdmin, quizzController.updateAnswer);

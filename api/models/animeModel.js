@@ -23,6 +23,8 @@ Anime.associate = function(models) {
     as: 'synonyms'
   });
 
+  
+  Anime.hasMany(models.Recommendation, { foreignKey: 'anime_id' });
   Anime.belongsToMany(models.Genre, {
     through: 'anime_genre',
     foreignKey: 'anime_id',

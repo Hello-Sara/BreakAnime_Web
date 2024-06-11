@@ -1,4 +1,3 @@
-// quizzController.js
 const Answer = require('../models/answerModel');
 const Question = require('../models/questionModel');
 const quizzService = require('../services/quizzService');

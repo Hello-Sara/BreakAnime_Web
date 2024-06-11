@@ -14,5 +14,10 @@ const User = sequelize.define('user', {
 }
 );
 
+
+User.associate = function(models) {
+  User.hasMany(models.Recommendation, { foreignKey: 'user_id' });
+} 
+
 module.exports = User;
  

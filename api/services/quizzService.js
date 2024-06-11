@@ -57,18 +57,24 @@ exports.addGenresToAnswer = async (answerId, genreNames, is_reversed ) => {
     throw error;
   }
 
-  const genres = await Genre.findAll({
-    where: { name: genreNames }
-  });
+  let genres = [];
 
-  if (genres.length !== genreNames.length) {
-    const error = new Error('Un ou plusieurs genres non trouvés');
-    error.name = 'NOT_FOUND';
-    throw error;
+  for (let genreName of genreNames) {
+    const genre = await Genre.findOne({
+      where: { name: genreName }
+    });
+    if (genre == null) {
+      const error = new Error('le genre ' + genreName + ' n\'existe pas');
+      error.name = 'BAD_REQUEST';
+      throw error;
+    } else {
+      genres.push(genre);
+    }
   }
 
   for (let genre of genres) {
-    let existingAssociation = AnswerGenre.findAll({ where: { genre_id: genre.id, answer_id: answerId } });
+    let existingAssociation = await AnswerGenre.findOne({ where: { genre_id: genre.id, answer_id: answerId } });
+    console.log(existingAssociation);
     if(existingAssociation == null){
       await AnswerGenre.create({ genre_id: genre.id, answer_id: answerId, is_reversed });
     } else {
