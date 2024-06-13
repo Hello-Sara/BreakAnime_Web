@@ -12,4 +12,9 @@ const Recommendation = sequelize.define('recommendation', {
   timestamps: false, 
 });
 
+
+Recommendation.associate = function(models) {
+  Recommendation.belongsTo(models.Anime, { foreignKey: 'anime_id' });
+}
+
 module.exports = Recommendation;

@@ -29,3 +29,16 @@ exports.postAnimesRecommendation = async (req, res) => {
         return res.status(500).json({ erreur: 'Une erreur est survenue lors de la récupération des recommandations.' });
     }
 };
+
+
+exports.getRecommendationsByUserId = async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+        const recommendations = await recommendationService.getRecommendationsByUserId(userId);
+        return res.status(200).json(recommendations);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des recommandations:', error);
+        return res.status(500).json({ erreur: 'Une erreur est survenue lors de la récupération des recommandations.' });
+    }
+}
