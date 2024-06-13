@@ -1,6 +1,8 @@
 const Answer = require('../models/answerModel');
 const Question = require('../models/questionModel');
-const quizzService = require('../services/quizzService');
+
+const QuizzService = require('../services/quizzService');
+const quizzService = new QuizzService();
 
 exports.getAllQuestionsWithAnswers = async (req, res) => {
   try {

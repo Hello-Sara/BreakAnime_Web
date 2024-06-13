@@ -1,5 +1,6 @@
 const sequelize = require('../config/database');
-const recommendationService = require('../services/recommendationService'); 
+const RecommendationService = require('../services/recommendationService'); 
+const recommendationService = new RecommendationService();
 
 exports.postAnimesRecommendation = async (req, res) => {
     const { genreList } = req.body;

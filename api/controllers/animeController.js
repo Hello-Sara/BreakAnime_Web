@@ -1,4 +1,5 @@
-const animeService = require('../services/animeService');
+const AnimeService = require('../services/animeService');
+const animeService = new AnimeService();
 
 // Afficher tous les animes
 exports.getAllAnimes = async (req, res) => {
@@ -52,7 +53,7 @@ exports.getAnimesByGenreName = async (req, res) => {
 // Créer un nouvel anime
 exports.createAnime = async (req, res) => {
   try {
-    const anime = await animeService.createAnime(req.body);
+    const anime = animeService.createAnime(req.body);
     res.status(201).json(anime);
   } catch (error) {
     res.status(500).json({ message: 'Erreur lors de la création de l\'anime', error: error.message });
@@ -94,5 +95,3 @@ exports.addGenresToAnime = async (req, res) => {
       res.status(500).json({ message: 'Erreur lors de l\'ajout des genres à l\'anime', error: error.message });
   }
 };
-
-

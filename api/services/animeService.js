@@ -7,13 +7,11 @@ const SeasonService = require('./seasonService');
 const { Op } = require('sequelize');
 
 class AnimeService {
-    
-    // Afficher tous les animes avec leurs synonymes
-    static async getAllAnimes() {
+    async getAllAnimes() {
         const seasonService = new SeasonService();
         try {
             let animes = await Anime.findAll({
-                attributes: { exclude: ['season_id'] }, // Exclure season_id de la réponse
+                attributes: { exclude: ['season_id'] },
                 include: [{
                     model: Synonyms,
                     as: 'synonyms',
@@ -22,44 +20,44 @@ class AnimeService {
                     model: Genre,
                     as: 'genres',
                     attributes: ['id', 'name', 'description'],
-                    through: { attributes: [] } // Cela exclut les attributs de la table d'association
+                    through: { attributes: [] } 
                 },
                 {
                     model: AnimeSeason,
                     as: 'animeSeason',
-                    attributes: ['season', 'year', 'id'] // Ajoutez les attributs que vous voulez récupérer
+                    attributes: ['season', 'year', 'id'] 
                 }]
             });
-
-            animes = animes.map(anime => {
-                const plainAnime = anime.get({ plain: true }); // Convertir l'objet Sequelize en une version modifiable
+    
+            let mappedAnimes = await Promise.all(animes.map(async anime => {
+                const plainAnime = anime.get({ plain: true });
+    
                 if(plainAnime.animeSeason) {
-                    plainAnime.animeSeason = seasonService.mapSeason(plainAnime.animeSeason);
-                    plainAnime.type = AnimeService.mapType(plainAnime.type);
+                    plainAnime.animeSeason = seasonService.mapSeason(plainAnime.animeSeason);                 
                 }
+    
+                if(plainAnime.type) {
+                    plainAnime.type = await this.mapType(plainAnime.type);
+                }
+    
+                if(plainAnime.status) {
+                    plainAnime.status = await this.mapStatus(plainAnime.status);
+                }
+    
                 return plainAnime;
-            });
-
-            animes = animes.map(anime => {
-                if(anime.status) {
-                    anime.status = AnimeService.mapStatus(anime.status);
-                }
-                return anime;
-            });
-
-            return animes;
+            }));
+            return mappedAnimes;
         } catch (error) {
             console.log(error);
             throw error;
         }
     }
-
-    // Afficher un anime spécifique par son ID avec ses synonymes
-    static async getAnimeById(id) {
+    
+    async getAnimeById(id) {
         const seasonService = new SeasonService();
         try {
             let anime = await Anime.findByPk(id, {
-                attributes: { exclude: ['season_id'] }, // Exclure season_id de la réponse
+                attributes: { exclude: ['season_id'] }, 
                 include: [{
                     model: Synonyms,
                     as: 'synonyms',
@@ -68,12 +66,12 @@ class AnimeService {
                     model: Genre,
                     as: 'genres',
                     attributes: ['name', 'description'],
-                    through: { attributes: [] } // Cela exclut les attributs de la table d'association
+                    through: { attributes: [] } 
                 },
                 {
                     model: AnimeSeason,
                     as: 'animeSeason',
-                    attributes: ['season', 'year', 'id'] // Ajoutez les attributs que vous voulez récupérer
+                    attributes: ['season', 'year', 'id'] 
                 }
             ]
             });
@@ -82,24 +80,28 @@ class AnimeService {
                 error.name = 'NOT_FOUND';
                 throw error;
             } else {
-                animes = animes.map(anime => {
-                    const plainAnime = anime.get({ plain: true }); // Convertir l'objet Sequelize en une version modifiable
-                    if(plainAnime.animeSeason) {
-                        plainAnime.animeSeason = seasonService.mapSeason(plainAnime.animeSeason);
-                        plainAnime.type = AnimeService.mapType(plainAnime.type);
-                    }
-                    return plainAnime;
-                });
-            }
+                const plainAnime = anime.get({ plain: true });
+                
+                if(plainAnime.animeSeason) {
+                    plainAnime.animeSeason = await seasonService.mapSeason(plainAnime.animeSeason);                 
+                }
 
-            return anime;
+                if(plainAnime.type) {
+                    plainAnime.type = await this.mapType(plainAnime.type);
+                }
+                
+                if(plainAnime.status) {
+                    plainAnime.status = await this.mapStatus(plainAnime.status);
+                }
+
+                return plainAnime;
+            }
         } catch (error) {
             throw error;
         }
     }
-
-    // Rechercher un anime par titre ou synonyme
-    static async searchAnimeByTitleOrSynonym(term) {
+    
+    async searchAnimeByTitleOrSynonym(term) {
         const seasonService = new SeasonService();
         try {
             const animes = await Anime.findAll({
@@ -124,12 +126,12 @@ class AnimeService {
                     attributes: ['season', 'year', 'id']
                 }]
             });
-
+    
             return animes.map(anime => {
                 const plainAnime = anime.get({ plain: true });
                 if(plainAnime.animeSeason) {
                     plainAnime.animeSeason = seasonService.mapSeason(plainAnime.animeSeason);
-                    plainAnime.type = AnimeService.mapType(plainAnime.type);
+                    plainAnime.type = this.mapType(plainAnime.type);
                 }
                 return plainAnime;
             });
@@ -138,26 +140,24 @@ class AnimeService {
             throw error;
         }
     }
-
-    // Afficher tous les animes d'un genre spécifique
-    static async getAnimesByGenreName(genreName) {
+    
+    async getAnimesByGenreName(genreName) {
         try {
-          const animes = await Anime.findAll({
+            const animes = await Anime.findAll({
             include: [{
-              model: Genre,
-              where: { name: genreName },
-              through: AnimeGenre
+                model: Genre,
+                where: { name: genreName },
+                through: AnimeGenre
             }]
-          });
-          return animes;
+            });
+            return animes;
         } catch (error) {
-          console.log(error);
-          throw error;
+            console.log(error);
+            throw error;
         }
-      }
-
-    // Créer un nouvel anime avec ses synonymes
-    static async createAnime(data) {
+    }
+    
+    async createAnime(data) {
         try {
             const { synonyms, seasonId,  ...animeData } = data;
             const anime = await Anime.create(animeData);
@@ -165,7 +165,7 @@ class AnimeService {
                 const synonymsData = synonyms.map(synonym => ({ name: synonym, anime_id: anime.id }));
                 await Synonyms.bulkCreate(synonymsData);
             }
-
+    
             if (seasonId) {
                 const season = await AnimeSeason.findByPk(seasonId);
                 if (!season) {
@@ -181,9 +181,8 @@ class AnimeService {
             throw error;
         }
     }
-
-    // Mettre à jour un anime existant et ses synonymes
-    static async updateAnime(id, data) {
+    
+    async updateAnime(id, data) {
         try {
             const { synonyms, ...animeData } = data;
             const anime = await Anime.findByPk(id);
@@ -193,7 +192,7 @@ class AnimeService {
                 throw error;
             }
             await anime.update(animeData);
-
+    
             if (animeData.seasonId) {
                 const season = await AnimeSeason.findByPk(animeData.seasonId);
                 if (!season) {
@@ -205,9 +204,7 @@ class AnimeService {
                 await anime.setAnimeSeason(season);
             }
             if (synonyms && synonyms.length > 0) {
-                // Supprimer les anciens synonymes
                 await Synonyms.destroy({ where: { anime_id: id } });
-                // Ajouter les nouveaux synonymes
                 const synonymsData = synonyms.map(synonym => ({ name: synonym, anime_id: id }));
                 await Synonyms.bulkCreate(synonymsData);
             }
@@ -216,9 +213,8 @@ class AnimeService {
             throw error;
         }
     }
-
-    // Supprimer un anime
-    static async deleteAnime(id) {
+    
+    async deleteAnime(id) {
         try {
             const anime = await Anime.findByPk(id);
             if (!anime) {
@@ -233,8 +229,8 @@ class AnimeService {
             throw error;
         }
     }
-
-    static async addGenresToAnime(animeId, genreIds) {
+    
+    async addGenresToAnime(animeId, genreIds) {
         try {
             const anime = await Anime.findByPk(animeId);
             if (!anime) {
@@ -242,10 +238,7 @@ class AnimeService {
                 error.name = 'NOT_FOUND';
                 throw error;
             }
-    
-            // Remove existing genre associations
             await anime.setGenres([]);
-    
             const genres = await Genre.findAll({
                 where: {
                     id: genreIds
@@ -258,14 +251,13 @@ class AnimeService {
                 throw error;
             }
     
-            // Create new genre associations
             await anime.setGenres(genres);
         } catch (error) {
             throw error;
         }
     }
-
-    static mapType(type) {
+    
+    async mapType(type) {
         switch (type) {
             case 0:
                 return 'ANIME TV';
@@ -278,13 +270,13 @@ class AnimeService {
             case 5:
                 return 'MUSIC';
             case 6:
-                return 'UNDEFINED';
+                return 'NON DÉFINI';
             default:
-                return 'UNKNOWN';
+                return 'INCONNU';
         }
     }
-
-    static mapStatus(status) {
+    
+    async mapStatus(status) {
         switch (status) {
             case 0:
                 return 'FINI';
@@ -293,7 +285,7 @@ class AnimeService {
             case 2:
                 return 'PAS ENCORE DIFFUSÉ';
             default:
-                return 'UNKNOWN';
+                return 'INCONNU';
         }
     }
 }

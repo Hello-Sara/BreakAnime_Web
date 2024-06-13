@@ -15,6 +15,4 @@ Season.associate = function(models) {
     Season.hasMany(models.Anime, { as: 'animes', foreignKey: 'season_id'});
 }
 
-
-
 module.exports = Season;

@@ -1,6 +1,7 @@
-const authService = require('../services/authService');
+const AuthService = require('../services/authService');
+const authService = new AuthService();
 
-const login = async (req, res) => {
+exports.login = async (req, res) => {
   const { email, username, password } = req.body;
   try {
     const token = await authService.login(email, username, password);
@@ -11,7 +12,7 @@ const login = async (req, res) => {
 };
 
 
-const verifyToken = async (req, res) => {
+exports.verifyToken = async (req, res) => {
   const token = req.headers.authorization;
   if (!token) {
     return res.status(401).json({ error: 'No token provided' });
@@ -28,7 +29,7 @@ const verifyToken = async (req, res) => {
   }
 };
 
-const adminLogin = async (req, res) => {
+exports.adminLogin = async (req, res) => {
   const { email, password } = req.body;
   try {
     const token = await authService.loginAsAdmin(email, password);
@@ -44,10 +45,10 @@ const adminLogin = async (req, res) => {
   }
 };
 
-const register = async (req, res) => {
+exports.register = async (req, res) => {
   const user = req.body;
-  if(user.password.length < 6 || user.password.length > 16) {
-    return res.status(400).json({ error: 'Password must be between 6 and 16 characters' });
+  if(user.password.length < 10) {
+    return res.status(400).json({ error: 'Password must be at least 10 characters' });
   }
   try {
     const token = await authService.register(user.name, user.email, user.username, user.password);
@@ -55,11 +56,4 @@ const register = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
-
-module.exports = {
-  login,
-  register,
-  adminLogin,
-  verifyToken
 };

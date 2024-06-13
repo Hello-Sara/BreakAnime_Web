@@ -59,29 +59,6 @@ sequelize.authenticate()
     .filter(model => typeof model.associate === "function")
     .forEach(model => model.associate(models));
 
-  
-Genre.sync()
-  .then(() => {
-    console.log('Table Genre créée avec succès.');
-    return Season.sync();
-  })
-  .then(() => {
-    console.log('Table AnimeSeason créée avec succès.');
-    return Anime.sync();
-  })
-  .then(() => {
-    console.log('Table Anime créée avec succès.');
-  })
-  .catch(error => console.log('Une erreur est survenue : ', error));
-
-sequelize.sync({ force: false })
-  .then(() => {
-    console.log('Database connected');
-  })
-  .catch((err) => {
-    console.error('Unable to connect to the database:', err);
-  });
-
 app.use('/api/auth', authRoutes);
 app.use('/api', animeRoutes);
 app.use('/api/resource', userRoutes);
