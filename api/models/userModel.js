@@ -21,3 +21,5 @@ User.associate = function(models) {
 
 module.exports = User;
  
+
+

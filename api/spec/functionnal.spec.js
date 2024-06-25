@@ -1,4 +1,4 @@
-const SeasonService = require('../services/seasonService'); // Ajustez le chemin selon votre structure de projet
+const SeasonService = require('../services/seasonService'); 
 
 describe('SeasonService Functional Tests', () => {
     it('should return a list of seasons', async () => {
